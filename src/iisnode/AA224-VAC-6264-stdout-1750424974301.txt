@@ -1,0 +1,2 @@
+Connected to DB via SSH
+Serveur en écoute sur le port 10.102.2.24:\\.\pipe\f967c826-aa8f-48b4-a993-e4cf4178b73a

@@ -1,0 +1,7 @@
+(node:2140) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Application has thrown an uncaught exception and is terminated:
+TypeError: results.map is not a function
+    at Query.onResult (file:///C:/inetpub/wwwroot/projet_tdb/TBD-app/src/Back/Server.js:54:38)
+    at C:\inetpub\wwwroot\projet_tdb\TBD-app\node_modules\mysql2\lib\commands\query.js:90:16
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)

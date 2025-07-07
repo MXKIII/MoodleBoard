@@ -1,0 +1,760 @@
+@import "./variables.scss";
+
+/* ===========================
+   RESET & BASE
+   =========================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--inspe-grey);
+  background-color: rgb(209, 223, 235);
+  background-size: 400% 400%;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p {
+  color: var(--inspe-blue);
+}
+
+/* ===========================
+   NAVIGATION & LIENS
+   =========================== */
+.return {
+  background: none;
+  display: flex;
+  justify-content: center;
+  a {
+    color: var(--inspe-white);
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    background-color: (var(--inspe-light-blue));
+    border: solid 2px var(--inspe-light-blue);
+    &:hover {
+      background-color: var(--inspe-white);
+      color: var(--inspe-blue);
+    }
+  }
+}
+
+/* ===========================
+   FORMULAIRES
+   =========================== */
+.search-form {
+  border: none;
+  padding: 0;
+  width: 100%;
+}
+
+.login-form {
+  border: 2px solid var(--inspe-light-blue);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 30px auto;
+  background-color: var(--inspe-white);
+  max-width: 600px;
+}
+
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--inspe-light-blue);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.connection-button,
+.submit-button {
+  border: 1px solid var(--inspe-light-blue);
+  margin-left: 1%;
+  &:hover {
+    border: 1px solid var(--inspe-white);
+    background-color: var(--inspe-light-blue);
+    color: var(--inspe-white);
+    margin-left: 1%;
+  }
+}
+
+
+.custom-field {
+  position: relative;
+  padding-top: 20px;
+  margin-bottom: 5px;
+  .login-input {
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 2px solid #ddd;
+    background: none;
+    transition: border-color 0.5s ease;
+    border-radius: 5px;
+    &:valid,
+    &:focus {
+      border-color: var(--inspe-light-blue);
+      transition-delay: 0.15s;
+    }
+    & + .placeholder {
+      padding: 0 5px;
+      left: 8px;
+    }
+    &:valid + .placeholder,
+    &:focus + .placeholder {
+      top: -2px;
+      font-size: 12px;
+      color: #222;
+      background: var(--inspe-white);
+    }
+  }
+  .placeholder {
+    position: absolute;
+    left: 12px;
+    top: 15px;
+    color: #9ea8b8;
+    transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* ===========================
+   TABLEAUX
+   =========================== */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  th,
+  td {
+    color: var(--inspe-grey);
+    border: 1px solid var(--inspe-light-blue);
+    padding: 10px;
+    text-align: left;
+  }
+}
+
+.tableau1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: auto;
+    > li {
+      justify-content: center;
+      width: 30%;
+      color: var(--inspe-blue);
+      list-style: inside;
+      list-style-type: decimal;
+      border: 2px solid var(--inspe-light-blue);
+      border-radius: 10px;
+      background-color: var(--inspe-white);
+      margin: 10px;
+      padding: 15px;
+      > a {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      > button {
+        color: var(--inspe-blue);
+        background-color: var(--inspe-white);
+        padding: 0.6em 1.2em;
+        font-size: 15px;
+        margin: 0.2em;
+        cursor: pointer;
+        border: 1px solid var(--inspe-light-blue);
+        transition: all 0.3s ease;
+        width: 90%;
+        border-radius: 5px;
+        &:hover {
+          color: var(--inspe-white);
+          background-color: var(--inspe-light-blue);
+        }
+      }
+    }
+  }
+}
+
+.tableau2 {
+  width: 97%;
+  overflow-x: auto;
+  border: 2px solid var(--inspe-light-blue);
+  border-radius: 10px;
+  margin: 20px auto;
+  background-color: var(--inspe-white);
+  padding: 20px;
+}
+
+/* ===========================
+   PAGINATION
+   =========================== */
+.pagination {
+  width: 97%;
+  overflow-x: auto;
+  border: 2px solid var(--inspe-light-blue);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  margin: 20px auto;
+  background: none;
+  background-color: var(--inspe-white);
+  padding: 10px;
+  button {
+    color: var(--inspe-blue);
+    background-color: var(--inspe-white);
+    border: 1px solid var(--inspe-light-blue);
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover,
+    &.active {
+      color: var(--inspe-white);
+      background-color: var(--inspe-light-blue);
+    }
+  }
+  .pagination-list {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+
+  }
+}
+
+/* ===========================
+   DASHBOARD & STATS
+   =========================== */
+.main-item,
+.secondary-item,
+.tertiary-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.main-item {
+  margin: 5% auto;
+  text-align: center;
+  border: 2px solid var(--inspe-light-blue);
+  padding: 1%;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background-color: var(--inspe-white);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  .stat-list-item {
+    box-sizing: border-box;
+    margin: 1%;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .stat-label {
+    white-space: nowrap;
+  }
+
+  .date-select {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .react-datepicker__input-container > input {
+    border: 2px solid var(--inspe-light-blue);
+    border-radius: 12px;
+    text-align: center;
+    color: var(--inspe-blue);
+  }
+}
+
+.secondary-item {
+  margin: 5% auto;
+  text-align: center;
+  border: 2px solid var(--inspe-light-blue);
+  padding: 1%;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background-color: var(--inspe-white);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  .stat-list-item {
+    box-sizing: border-box;
+    margin: 1%;
+  }
+
+  .stat-item {
+    width: 100%;
+    height: 100%;
+  }
+
+  .stat-large-item {
+    width: 100%;
+    height: 100%;
+  }
+
+  .stat-label {
+    white-space: nowrap;
+  }
+}
+
+.tertiary-item {
+  margin: 5% auto;
+  text-align: center;
+  border: 2px solid var(--inspe-light-blue);
+  padding: 1%;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background-color: var(--inspe-white);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  .stat-list-item {
+    box-sizing: border-box;
+    margin: 1%;
+  }
+
+  .stat-item {
+    width: 100%;
+  }
+
+  .stat-label {
+    white-space: nowrap;
+  }
+}
+
+.stats-list {
+  width: 100%;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-large-item {
+  margin: 1% auto;
+  text-align: center;
+  border: 2px solid var(--inspe-light-blue);
+  padding: 7%;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background-color: var(--inspe-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  align-items: center;
+
+  &:hover {
+    background-color: var(--inspe-light-blue);
+    color: var(--inspe-white);
+    transform: translateY(-5px);
+
+    .stat-value {
+      color: var(--inspe-white);
+    }
+
+    .stat-label {
+      color: var(--inspe-light-grey);
+    }
+  }
+}
+
+.stat-item {
+  margin: 1% auto;
+  text-align: center;
+  border: 2px solid var(--inspe-light-blue);
+  padding: 7%;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background-color: var(--inspe-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  align-items: center;
+
+  &:hover {
+    background-color: var(--inspe-light-blue);
+    color: var(--inspe-white);
+    transform: translateY(-5px);
+
+    .stat-value {
+      color: var(--inspe-white);
+    }
+
+    .stat-label {
+      color: var(--inspe-light-grey);
+    }
+  }
+}
+
+.stat-value {
+  font-weight: bold;
+  color: var(--inspe-blue);
+}
+
+.stat-label {
+  color: var(--inspe-grey);
+}
+
+/* ===========================
+   UTILITAIRES
+   =========================== */
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.table-close {
+  color: black;
+  background-color: var(--inspe-white);
+  border: 1px solid black;
+  transition: all 0.3s ease;
+  &:hover {
+    color: var(--inspe-white);
+    background-color: red;
+    border: 1px solid red;
+    transform: translateY(-5px);
+  }
+}
+
+
+
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--inspe-accent);
+  animation: loading 3s linear infinite;
+}
+
+.Close {
+  color: var(--inspe-grey);
+  float: right;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: var(--inspe-blue);
+  }
+}
+
+.main-widget {
+  background: linear-gradient(
+    to bottom right,
+    var(--inspe-white),
+    var(--inspe-light-grey)
+  );
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 97%;
+  margin: 3% auto;
+  border: 2px solid var(--inspe-light-blue);
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (min-width: 969px) {
+  .Close {
+    font-size: 28px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+  .main-item {
+    width: calc(50% - 40px);
+    .stat-list-item {
+      width: calc(25% - 20px);
+    }
+    .stat-label {
+      font-size: 12px;
+    }
+    .date-select {
+      width: 100%;
+    }
+    .react-datepicker-wrapper {
+      width: 100%;
+    }
+    .react-datepicker__input-container > input {
+      width: calc(100% - 40px);
+      font-size: 16px;
+    }
+  }
+  .secondary-item {
+    width: calc(50% - 40px);
+    .stat-list-item {
+      width: calc(27% - 20px);
+    }
+    .stat-label {
+      font-size: 12px;
+    }
+  }
+  .tertiary-item {
+    width: calc(100% - 40px);
+    .stat-list-item {
+      width: calc(11% - 10px);
+      margin: 5px;
+      padding: 10px;
+    }
+    .stat-label {
+      font-size: 12px;
+    }
+  }
+  .stat-value {
+    font-size: 28px;
+    margin: auto;
+    width: 100%;
+  }
+
+  .stat-label {
+    font-size: 1.2vw;
+  }
+  .query-graph {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    canvas {
+      max-height: 80%;
+    }
+  }
+}
+
+@media (max-width: 968px) {
+  .Close {
+    font-size: 24px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+  .main-item {
+    width: calc(100% - 20px);
+    .stat-list-item {
+      width: calc(45% - 10px);
+    }
+    .stat-label {
+      font-size: 14px;
+    }
+    .date-select {
+      width: 100%;
+    }
+    .react-datepicker-wrapper {
+      width: 100%;
+    }
+    .react-datepicker__input-container > input {
+      width: calc(100% - 20px);
+      font-size: 14px;
+    }
+  }
+  .secondary-item {
+    width: calc(100% - 20px);
+    .stat-list-item {
+      width: calc(50% - 20px);
+    }
+    .stat-label {
+      font-size: 14px;
+    }
+  }
+  .tertiary-item {
+    width: calc(100% - 20px);
+    .stat-list-item {
+      width: calc(20% - 10px);
+      margin: 5px;
+      padding: 8px;
+    }
+    .stat-label {
+      font-size: 14px;
+    }
+  }
+  .stat-value {
+    font-size: 24px;
+    margin: auto;
+    width: 100%;
+  }
+  .stat-label {
+    font-size: 1.5vw;
+  }
+  .query-graph {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    text-align: center;
+    canvas {
+      max-height: 70%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .Close {
+    font-size: 20px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .main-item {
+    width: calc(100% - 10px);
+    .stat-list-item {
+      width: calc(100% - 10px);
+    }
+    .stat-label {
+      font-size: 16px;
+    }
+    .date-select {
+      width: 100%;
+    }
+    .react-datepicker-wrapper {
+      width: 100%;
+    }
+    .react-datepicker__input-container > input {
+      width: calc(100% - 10px);
+      font-size: 12px;
+    }
+  }
+  .secondary-item {
+    width: calc(100% - 10px);
+    .stat-list-item {
+      width: calc(100% - 10px);
+    }
+    .stat-label {
+      font-size: 16px;
+    }
+  }
+  .tertiary-item {
+    width: calc(100% - 10px);
+    .stat-list-item {
+      width: calc(30% - 10px);
+      margin: 5px;
+      padding: 8px;
+    }
+    .stat-label {
+      font-size: 11px;
+    }
+  }
+  .stat-value {
+    font-size: 20px;
+    margin: auto;
+    width: 100%;
+  }
+  .stat-label {
+    font-size: 2vw;
+  }
+  .query-graph {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+    canvas {
+      max-height: 60%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .Close {
+    font-size: 18px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .main-item {
+    width: calc(100% - 5px);
+    .stat-item {
+      width: calc(100% - 5px);
+    }
+    .stat-label {
+      font-size: 18px;
+    }
+    .date-select {
+      width: 100%;
+    }
+    .react-datepicker-wrapper {
+      width: 100%;
+    }
+    .react-datepicker__input-container > input {
+      width: calc(100% - 5px);
+      font-size: 10px;
+    }
+  }
+  .secondary-item {
+    width: calc(100% - 5px);
+    .stat-item {
+      width: calc(100% - 5px);
+    }
+    .stat-label {
+      font-size: 18px;
+    }
+    .stat-large-item {
+      width: calc(100% - 5px);
+    }
+  }
+  .tertiary-item {
+    width: calc(100% - 5px);
+    .stat-item {
+      width: calc(40% - 5px);
+      margin: 5px;
+      padding: 5px;
+    }
+    .stat-label {
+      font-size: 10px;
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  .stat-value {
+    font-size: 18px;
+    margin: auto;
+    width: 100%;
+  }
+  .stat-label {
+    font-size: 3vw;
+  }
+  .query-graph {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 5px;
+    text-align: center;
+    canvas {
+      max-height: 50%;
+    }
+  }
+}

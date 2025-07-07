@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./Authentification";
-import { useUser } from "../../UserContext";
+import { useUser } from "./UserContext";
 
 // Composant de page de connexion utilisateur
 const LoginPage = ({ onLoginSuccess }) => {

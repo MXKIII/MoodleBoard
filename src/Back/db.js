@@ -1,75 +1,36 @@
-// Importation des modules nécessaires pour la connexion à la base de données via SSH
-import mysql from "mysql2"; // Permet d'utiliser les fonctionnalités MySQL en Node.js
-import { Client as SSHClient } from "ssh2"; // Permet d'établir un tunnel SSH
+// Importation du module mysql2 pour gérer la connexion à la base de données MySQL
+import mysql from "mysql2";
 
-// ===================================
-// Configuration de la base de données
-// ===================================
-// Paramètres de connexion à la base MySQL distante via tunnel SSH.
-const sshConfig = {
-  host: "10.107.3.93", // Hôte SSH (serveur distant)
-  port: 22, // Port SSH
-  username: "admin", // Utilisateur SSH
-  password: "iWsXsHBcf*22", // Mot de passe SSH (à sécuriser)
-};
-
-const dbConfig = {
-  host: "127.0.0.1", // Hôte MySQL (local car tunnelé)
-  port: 3307, // Port local du tunnel SSH (doit être libre sur la machine locale)
-  user: "admin", // Utilisateur MySQL sur le serveur distant
-  password: "iWsXsHBcf*22", // Mot de passe MySQL (à sécuriser)
-  database: "moodle", // Nom de la base de données
-};
+// Importation du module dotenv pour charger les variables d'environnement depuis un fichier .env
+import dotenv from "dotenv";
+dotenv.config();
 
 let db; // Variable globale pour stocker la connexion MySQL active
-let sshTunnel; // Pour garder la référence au tunnel SSH
 
-// ========================================================================
-// Fonction pour établir la connexion à la base de données via SSH tunnel
-// ========================================================================
-// Cette fonction crée un tunnel SSH puis une connexion MySQL à travers ce tunnel.
-// Elle prend en paramètre un callback à exécuter une fois la connexion établie.
+// Fonction pour établir la connexion à la base de données
+// Les paramètres de connexion sont récupérés depuis les variables d'environnement
 export function connectDB(callback) {
-  sshTunnel = new SSHClient();
-  sshTunnel.on("ready", () => {
-    // Création du tunnel local -> distant
-    sshTunnel.forwardOut(
-      "127.0.0.1",
-      3307,
-      "127.0.0.1",
-      3306,
-      (err, stream) => {
-        if (err) {
-          console.error("Error setting up SSH tunnel:", err);
-          throw err;
-        }
-        // Connexion MySQL via le tunnel SSH
-        db = mysql.createConnection({
-          ...dbConfig,
-          stream,
-        });
-        db.connect((err) => {
-          if (err) {
-            console.error("Error connecting to database via SSH tunnel:", err);
-            throw err;
-          }
-          console.log("Connected to DB via SSH tunnel");
-          callback();
-        });
-      }
-    );
+  db = mysql.createConnection({
+    host: process.env.DB_HOST, // Hôte MySQL (ex: 'localhost')
+    port: process.env.DB_PORT, // Port MySQL (ex: 3306)
+    user: process.env.DB_USER, // Utilisateur MySQL (ex: 'root')
+    password: process.env.DB_PASSWORD, // Mot de passe MySQL
+    database: process.env.DB_NAME, // Nom de la base de données
   });
-  sshTunnel.on("error", (err) => {
-    console.error("SSH tunnel error:", err);
-    throw err;
+
+  db.connect((err) => {
+    if (err) {
+      // Affiche une erreur si la connexion échoue
+      console.error('Error connecting to database:', err);
+      throw err;
+    }
+    // Affiche un message si la connexion réussit
+    console.log("Connected to DB");
+    callback();
   });
-  sshTunnel.connect(sshConfig);
 }
 
-// =====================================================
-// Fonction pour récupérer la connexion MySQL active (db)
-// =====================================================
-// Permet d'accéder à la connexion MySQL depuis d'autres modules du projet.
+// Fonction pour récupérer la connexion MySQL active
 export function getDB() {
   return db;
 }

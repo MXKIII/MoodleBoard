@@ -62,7 +62,7 @@ Currently, two official plugins are available:
    - Téléchargez et installez VS Code depuis [https://code.visualstudio.com/](https://code.visualstudio.com/).
    - Pour ouvrir le dossier du projet dans VS Code :
      - Lancez VS Code.
-     - Cliquez sur **Fichier > Ouvrir un dossier...** puis sélectionnez le dossier racine de votre projet (par exemple `TBD-app`).
+     - Cliquez sur **Fichier > Ouvrir un dossier...** puis sélectionnez le dossier racine de votre projet (par exemple `TDB-app`).
      - Vous pouvez aussi faire un clic droit sur le dossier dans l’explorateur Windows et choisir **Ouvrir avec Code** si cette option est disponible.
 
 2. **Créer un fichier `.env` à la racine du projet**
@@ -71,13 +71,11 @@ Currently, two official plugins are available:
    Exemple de contenu pour `.env` :
 
    ```properties
-   AUTHORIZED_ORIGINS=http://localhost:5173,http://10.102.2.24
    PORT=5000
    VITE_API_BASE_URL=http://10.102.2.24
    VITE_PORT=5000
    ```
 
-   - `AUTHORIZED_ORIGINS` : liste des origines autorisées pour le backend (séparées par des virgules)
    - `PORT` : port utilisé par le backend Node.js
    - `VITE_API_BASE_URL` : URL utilisée par le backend Node.js, définie pour fonctionner avec Vite React (exemple : l'URL de l'API à laquelle le front va faire ses requêtes)
    - `VITE_PORT` : port utilisé par le backend Node.js, défini pour fonctionner avec Vite React (ce port doit correspondre à celui utilisé dans la configuration du backend)

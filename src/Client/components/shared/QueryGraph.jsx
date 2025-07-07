@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
-import { useUser } from "../../UserContext";
+import { useUser } from "./UserContext";
 import {
   Chart as ChartJS,
   CategoryScale,

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "./Authentification";
-import { useUser } from "../../UserContext";
+import { useUser } from "./UserContext";
 import axios from "axios";
 
 // Composant principal de layout qui gère la structure globale de l'application

@@ -1,7 +1,7 @@
 import React, { useState, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./Client/components/shared/Authentification";
-import { UserProvider } from "./Client/UserContext";
+import { UserProvider } from "./Client/components/shared/UserContext";
 import ProtectedRoute from "./Client/components/shared/ProtectedRoute";
 
 const Layout = lazy(() => import("./Client/components/shared/Layout"));
