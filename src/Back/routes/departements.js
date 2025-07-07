@@ -35,11 +35,15 @@ router.post("/departement", (req, res) => {
     JOIN mdl_context ctx ON ctx.id = ra.contextid
     JOIN mdl_course c ON c.id = ctx.instanceid
     JOIN mdl_role r ON r.id = ra.roleid
+    LEFT JOIN mdl_files f ON f.contextid = ctx.id
     WHERE 
       u.auth = 'cas' 
       AND u.deleted = 0
       AND u.idnumber IS NOT NULL
       AND r.shortname = 'editingteacher'
+      AND f.filename IS NOT NULL
+      AND f.filename != ''
+      AND f.filename != '.'
   `;
   db.query(sqlQuery, (err, results) => {
     // Gestion des erreurs : log côté serveur et réponse générique pour la sécurité
@@ -124,7 +128,16 @@ router.post("/departement-maths", (req, res) => {
     SELECT 
       c.shortname AS Code,
       c.fullname AS Cours,
-      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+      f.filename AS nom_fichier,
+      CONCAT(
+        'http://10.107.3.93/pluginfile.php/',
+        f.contextid, '/',
+        f.component, '/',
+        f.filearea, '/',
+        f.itemid, '/',
+        f.filename
+      ) AS url_fichier
     FROM 
       mdl_departement d
     JOIN mdl_user u ON u.idnumber = d.user_code
@@ -132,12 +145,16 @@ router.post("/departement-maths", (req, res) => {
     JOIN mdl_context ctx ON ctx.id = ra.contextid
     JOIN mdl_course c ON c.id = ctx.instanceid
     JOIN mdl_role r ON r.id = ra.roleid
+    LEFT JOIN mdl_files f ON f.contextid = ctx.id
     WHERE 
       u.auth = 'cas' 
       AND u.deleted = 0
       AND u.idnumber IS NOT NULL
       AND r.shortname = 'editingteacher'
       AND d.Liste = 'departement_maths'
+      AND f.filename IS NOT NULL
+      AND f.filename != ''
+      AND f.filename != '.'
     ORDER BY u.email DESC;
   `;
   db.query(sqlQuery, (err, results) => {
@@ -162,7 +179,16 @@ router.post("/departement-lettres", (req, res) => {
       u.email AS Email,
       c.shortname AS Code,
       c.fullname AS Description,
-      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+      f.filename AS nom_fichier,
+      CONCAT(
+        'http://10.107.3.93/pluginfile.php/',
+        f.contextid, '/',
+        f.component, '/',
+        f.filearea, '/',
+        f.itemid, '/',
+        f.filename
+      ) AS url_fichier
     FROM 
       mdl_departement d
     JOIN mdl_user u ON u.idnumber = d.user_code
@@ -170,12 +196,16 @@ router.post("/departement-lettres", (req, res) => {
     JOIN mdl_context ctx ON ctx.id = ra.contextid
     JOIN mdl_course c ON c.id = ctx.instanceid
     JOIN mdl_role r ON r.id = ra.roleid
+    LEFT JOIN mdl_files f ON f.contextid = ctx.id
     WHERE 
       u.auth = 'cas' 
       AND u.deleted = 0
       AND u.idnumber IS NOT NULL
       AND r.shortname = 'editingteacher'
       AND d.Liste = 'departement_lettres'
+      AND f.filename IS NOT NULL
+      AND f.filename != ''
+      AND f.filename != '.'
     ORDER BY u.email DESC;
   `;
   db.query(sqlQuery, (err, results) => {
@@ -198,7 +228,16 @@ router.post("/departement-anglais", (req, res) => {
       u.email AS Email,
       c.shortname AS Code,
       c.fullname AS Description,
-      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+      f.filename AS nom_fichier,
+      CONCAT(
+        'http://10.107.3.93/pluginfile.php/',
+        f.contextid, '/',
+        f.component, '/',
+        f.filearea, '/',
+        f.itemid, '/',
+        f.filename
+      ) AS url_fichier
     FROM 
       mdl_departement d
     JOIN mdl_user u ON u.idnumber = d.user_code
@@ -206,12 +245,16 @@ router.post("/departement-anglais", (req, res) => {
     JOIN mdl_context ctx ON ctx.id = ra.contextid
     JOIN mdl_course c ON c.id = ctx.instanceid
     JOIN mdl_role r ON r.id = ra.roleid
+    LEFT JOIN mdl_files f ON f.contextid = ctx.id
     WHERE 
       u.auth = 'cas' 
       AND u.deleted = 0
       AND u.idnumber IS NOT NULL
       AND r.shortname = 'editingteacher'
       AND d.Liste = 'departement_anglais'
+      AND f.filename IS NOT NULL
+      AND f.filename != ''
+      AND f.filename != '.'
     ORDER BY u.email DESC;
   `;
   db.query(sqlQuery, (err, results) => {
@@ -234,7 +277,16 @@ router.post("/departement-shsphilo", (req, res) => {
       u.email AS Email,
       c.shortname AS Code,
       c.fullname AS Description,
-      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+      f.filename AS nom_fichier,
+      CONCAT(
+        'http://10.107.3.93/pluginfile.php/',
+        f.contextid, '/',
+        f.component, '/',
+        f.filearea, '/',
+        f.itemid, '/',
+        f.filename
+      ) AS url_fichier
     FROM 
       mdl_departement d
     JOIN mdl_user u ON u.idnumber = d.user_code
@@ -242,12 +294,16 @@ router.post("/departement-shsphilo", (req, res) => {
     JOIN mdl_context ctx ON ctx.id = ra.contextid
     JOIN mdl_course c ON c.id = ctx.instanceid
     JOIN mdl_role r ON r.id = ra.roleid
+    LEFT JOIN mdl_files f ON f.contextid = ctx.id
     WHERE 
       u.auth = 'cas' 
       AND u.deleted = 0
       AND u.idnumber IS NOT NULL
       AND r.shortname = 'editingteacher'
       AND d.Liste = 'departement_shsphilo'
+      AND f.filename IS NOT NULL
+      AND f.filename != ''
+      AND f.filename != '.'
     ORDER BY u.email DESC;
   `;
   db.query(sqlQuery, (err, results) => {
@@ -260,89 +316,28 @@ router.post("/departement-shsphilo", (req, res) => {
 });
 
 // ===================================
-// Liste des fichiers publiés pour le département Documentation
+// Répète ce format pour chaque département suivant :
+// documentation, histgeo, eps, svt, espagnol, musique, allemand, artsplastiques, spc, techno, arch, ash, italien, ecogestion
 // ===================================
+// Pour chaque route, adapte le commentaire de la requête SQL et la description du résultat retourné.
+
 router.post("/departement-documentation", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Documentation
   const sqlQuery = `
-    SELECT 
-      u.email AS Email,
-      c.shortname AS Code,
-      c.fullname AS Description,
-      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
-    FROM 
-      mdl_departement d
-    JOIN mdl_user u ON u.idnumber = d.user_code
-    JOIN mdl_role_assignments ra ON ra.userid = u.id
-    JOIN mdl_context ctx ON ctx.id = ra.contextid
-    JOIN mdl_course c ON c.id = ctx.instanceid
-    JOIN mdl_role r ON r.id = ra.roleid
-    WHERE 
-      u.auth = 'cas' 
-      AND u.deleted = 0
-      AND u.idnumber IS NOT NULL
-      AND r.shortname = 'editingteacher'
-      AND d.Liste = 'departement_documentation'
-    ORDER BY u.email DESC;
-  `;
-  db.query(sqlQuery, (err, results) => {
-    if (err) {
-      console.error("Erreur lors de la requête à la base de données:", err);
-      return res.status(500).json({ error: "Erreur interne du serveur" });
-    }
-    res.json(results);
-  });
-});
-
-// ===================================
-// Liste des fichiers publiés pour le département HistGéo
-// ===================================
-router.post("/departement-histgeo", (req, res) => {
-  const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département HistGéo
-  const sqlQuery = `
-    SELECT 
-      u.email AS Email,
-      c.shortname AS Code,
-      c.fullname AS Description,
-      DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
-    FROM 
-      mdl_departement d
-    JOIN mdl_user u ON u.idnumber = d.user_code
-    JOIN mdl_role_assignments ra ON ra.userid = u.id
-    JOIN mdl_context ctx ON ctx.id = ra.contextid
-    JOIN mdl_course c ON c.id = ctx.instanceid
-    JOIN mdl_role r ON r.id = ra.roleid
-    WHERE 
-      u.auth = 'cas' 
-      AND u.deleted = 0
-      AND u.idnumber IS NOT NULL
-      AND r.shortname = 'editingteacher'
-      AND d.Liste = 'departement_histgeo'
-    ORDER BY u.email DESC;
-  `;
-  db.query(sqlQuery, (err, results) => {
-    if (err) {
-      console.error("Erreur lors de la requête à la base de données:", err);
-      return res.status(500).json({ error: "Erreur interne du serveur" });
-    }
-    res.json(results);
-  });
-});
-
-// ===================================
-// Liste des fichiers publiés pour le département EPS
-// ===================================
-router.post("/departement-eps", (req, res) => {
-  const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département EPS
-  const sqlQuery = `
-  SELECT 
+   SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -355,13 +350,122 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
+WHERE 
+    u.auth = 'cas' 
+    AND u.deleted = 0
+    AND u.idnumber IS NOT NULL
+    AND r.shortname = 'editingteacher'
+    AND d.Liste = 'departement_documentation'
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
+  `;
+
+  db.query(sqlQuery, (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la requête à la base de données:", err);
+      return res.status(500).json({ error: "Erreur interne du serveur" });
+    }
+    res.json(results);
+  });
+});
+
+router.post("/departement-histgeo", (req, res) => {
+  const db = getDB();
+  const sqlQuery = `
+   SELECT 
+    u.email AS Email,
+    c.shortname AS Code,
+    c.fullname AS Description,
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
+FROM 
+    mdl_departement d
+JOIN 
+    mdl_user u ON u.idnumber = d.user_code
+JOIN 
+    mdl_role_assignments ra ON ra.userid = u.id
+JOIN 
+    mdl_context ctx ON ctx.id = ra.contextid
+JOIN 
+    mdl_course c ON c.id = ctx.instanceid
+JOIN 
+    mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
+WHERE 
+    u.auth = 'cas' 
+    AND u.deleted = 0
+    AND u.idnumber IS NOT NULL
+    AND r.shortname = 'editingteacher'
+    AND d.Liste = 'departement_histgeo'
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
+  `;
+
+  db.query(sqlQuery, (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la requête à la base de données:", err);
+      return res.status(500).json({ error: "Erreur interne du serveur" });
+    }
+    res.json(results);
+  });
+});
+
+router.post("/departement-eps", (req, res) => {
+  const db = getDB();
+  const sqlQuery = `
+  SELECT 
+    u.email AS Email,
+    c.shortname AS Code,
+    c.fullname AS Description,
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
+FROM 
+    mdl_departement d
+JOIN 
+    mdl_user u ON u.idnumber = d.user_code
+JOIN 
+    mdl_role_assignments ra ON ra.userid = u.id
+JOIN 
+    mdl_context ctx ON ctx.id = ra.contextid
+JOIN 
+    mdl_course c ON c.id = ctx.instanceid
+JOIN 
+    mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_eps'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -373,18 +477,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département SVT
-// ===================================
 router.post("/departement-svt", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département SVT
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -397,13 +506,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_svt'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -415,18 +529,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Espagnol
-// ===================================
 router.post("/departement-espagnol", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Espagnol
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -439,13 +558,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_espagnol'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -457,18 +581,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Musique
-// ===================================
 router.post("/departement-musique", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Musique
   const sqlQuery = `
    SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -481,13 +610,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_musique'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -499,18 +633,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Allemand
-// ===================================
 router.post("/departement-allemand", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Allemand
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -523,13 +662,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_allemand'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -541,18 +685,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Arts Plastiques
-// ===================================
 router.post("/departement-artsplastiques", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Arts Plastiques
   const sqlQuery = `
    SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -565,13 +714,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_artsplastiques'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -583,18 +737,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département SPC
-// ===================================
 router.post("/departement-spc", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département SPC
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -607,13 +766,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_spc'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -625,18 +789,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Techno
-// ===================================
 router.post("/departement-techno", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Techno
   const sqlQuery = `
    SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -649,13 +818,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_techno'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -667,18 +841,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Arch
-// ===================================
 router.post("/departement-arch", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Arch
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -691,13 +870,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_arch'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -709,18 +893,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Ash
-// ===================================
 router.post("/departement-ash", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Ash
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -731,15 +920,20 @@ JOIN
     mdl_context ctx ON ctx.id = ra.contextid
 JOIN 
     mdl_course c ON c.id = ctx.instanceid
-    JOIN 
+JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_ash'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -751,18 +945,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Italien
-// ===================================
 router.post("/departement-italien", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Italien
   const sqlQuery = `
     SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -775,13 +974,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_italien'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
@@ -793,18 +997,23 @@ WHERE
   });
 });
 
-// ===================================
-// Liste des fichiers publiés pour le département Écogestion
-// ===================================
 router.post("/departement-ecogestion", (req, res) => {
   const db = getDB();
-  // Requête SQL pour récupérer la liste des fichiers publiés dans le département Écogestion
   const sqlQuery = `
    SELECT 
     u.email AS Email,
     c.shortname AS Code,
     c.fullname AS Description,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date
+    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS Date,
+    f.filename AS nom_fichier,
+     CONCAT(
+    'http://10.107.3.93/pluginfile.php/',
+    f.contextid, '/',
+    f.component, '/',
+    f.filearea, '/',
+    f.itemid, '/',
+    f.filename
+) AS url_fichier
 FROM 
     mdl_departement d
 JOIN 
@@ -817,13 +1026,18 @@ JOIN
     mdl_course c ON c.id = ctx.instanceid
 JOIN 
     mdl_role r ON r.id = ra.roleid
+LEFT JOIN 
+    mdl_files f ON f.contextid = ctx.id
 WHERE 
     u.auth = 'cas' 
     AND u.deleted = 0
     AND u.idnumber IS NOT NULL
     AND r.shortname = 'editingteacher'
     AND d.Liste = 'departement_ecogestion'
-    ORDER BY u.email DESC;
+    AND f.filename IS NOT NULL
+    AND f.filename != ''
+    AND f.filename != '.'ORDER BY 
+    u.email DESC;
   `;
 
   db.query(sqlQuery, (err, results) => {
