@@ -661,33 +661,82 @@ router.post("/active-other", (req, res) => {
 router.post("/user-activity", (req, res) => {
   const db = getDB();
   const { startDate, endDate } = req.body;
-  // Requête SQL pour récupérer des statistiques globales d'activité utilisateur sur une période donnée
+
   const sqlQuery = `
-  SELECT DISTINCT
-    u.id, 
-    u.username as nom_utilisateur, u.firstname as prenom, u.lastname nom, u.email,
-    DATE_FORMAT(FROM_UNIXTIME(u.lastaccess), '%d %b %Y %H:%i:%s') AS dernier_accès
-  FROM 
-    mdl_user u
-  LEFT JOIN 
-    mdl_role_assignments ra ON ra.userid = u.id
-  LEFT JOIN 
-    mdl_role r ON r.id = ra.roleid
-  WHERE 
-    u.deleted = 0 
-    AND u.suspended = 0
-    AND (r.shortname NOT IN ('student', 'teacher', 'editingteacher', 'manager') OR r.shortname IS NULL)
-    AND u.lastaccess BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?)
+    SELECT 
+      COUNT(DISTINCT u.id) AS total_users,
+      COUNT(DISTINCT CASE WHEN u.lastaccess BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?) THEN u.id END) AS active_users,
+      COUNT(DISTINCT CASE WHEN u.lastaccess < UNIX_TIMESTAMP(?) OR u.lastaccess IS NULL THEN u.id END) AS inactive_users,
+      COUNT(DISTINCT CASE WHEN r.shortname = 'student' THEN u.id END) AS student_count,
+      COUNT(DISTINCT CASE WHEN r.shortname = 'student' AND u.lastaccess BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?) THEN u.id END) AS active_student_count,
+      ROUND(100.0 * COUNT(DISTINCT CASE WHEN r.shortname = 'student' THEN u.id END) / NULLIF(COUNT(DISTINCT u.id), 0), 2) AS student_percentage,
+      COUNT(DISTINCT CASE WHEN r.shortname = 'teacher' THEN u.id END) AS teacher_count,
+      COUNT(DISTINCT CASE WHEN r.shortname = 'teacher' AND u.lastaccess BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?) THEN u.id END) AS active_teacher_count,
+      ROUND(100.0 * COUNT(DISTINCT CASE WHEN r.shortname = 'teacher' THEN u.id END) / NULLIF(COUNT(DISTINCT u.id), 0), 2) AS teacher_percentage,
+      COUNT(DISTINCT CASE WHEN r.shortname = 'editingteacher' THEN u.id END) AS admin_count,
+      COUNT(DISTINCT CASE WHEN r.shortname = 'editingteacher' AND u.lastaccess BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?) THEN u.id END) AS active_admin_count,
+      ROUND(100.0 * COUNT(DISTINCT CASE WHEN r.shortname = 'editingteacher' THEN u.id END) / NULLIF(COUNT(DISTINCT u.id), 0), 2) AS admin_percentage,
+      COUNT(DISTINCT CASE WHEN r.shortname NOT IN ('student', 'teacher', 'editingteacher', 'manager') OR r.shortname IS NULL THEN u.id END) AS other_count,
+      COUNT(DISTINCT CASE WHEN (r.shortname NOT IN ('student', 'teacher', 'editingteacher', 'manager') OR r.shortname IS NULL) AND u.lastaccess BETWEEN UNIX_TIMESTAMP(?) AND UNIX_TIMESTAMP(?) THEN u.id END) AS active_other_count,
+      ROUND(100.0 * COUNT(DISTINCT CASE WHEN r.shortname NOT IN ('student', 'teacher', 'editingteacher', 'manager') OR r.shortname IS NULL THEN u.id END) / NULLIF(COUNT(DISTINCT u.id), 0), 2) AS other_percentage
+    FROM mdl_user u
+    LEFT JOIN mdl_role_assignments ra ON ra.userid = u.id
+    LEFT JOIN mdl_role r ON r.id = ra.roleid
+    WHERE u.deleted = 0 AND u.suspended = 0
   `;
 
-  const params = [startDate, endDate];
+  const params = [
+    startDate, endDate, // active_users
+    startDate,          // inactive_users
+    startDate, endDate, // active_student_count
+    startDate, endDate, // active_teacher_count
+    startDate, endDate, // active_admin_count
+    startDate, endDate  // active_other_count
+  ];
 
   db.query(sqlQuery, params, (err, results) => {
     if (err) {
-      console.error("Database query error:", err);
-      return res.status(500).json({ error: "Internal server error" });
+      console.error("Erreur lors de la requête à la base de données:", err);
+      return res.status(500).json({ error: "Erreur interne du serveur" });
     }
-    res.json(results);
+    if (!results || results.length === 0) {
+      // Valeurs par défaut si aucun résultat
+      return res.json({
+        totalUsers: 0,
+        activeUsers: 0,
+        inactiveUsers: 0,
+        studentCount: 0,
+        activeStudentCount: 0,
+        studentPercentage: 0,
+        teacherCount: 0,
+        activeTeacherCount: 0,
+        teacherPercentage: 0,
+        adminCount: 0,
+        activeAdminCount: 0,
+        adminPercentage: 0,
+        otherCount: 0,
+        activeOtherCount: 0,
+        otherPercentage: 0,
+      });
+    }
+    const row = results[0];
+    res.json({
+      totalUsers: row.total_users,
+      activeUsers: row.active_users,
+      inactiveUsers: row.inactive_users,
+      studentCount: row.student_count,
+      activeStudentCount: row.active_student_count,
+      studentPercentage: row.student_percentage,
+      teacherCount: row.teacher_count,
+      activeTeacherCount: row.active_teacher_count,
+      teacherPercentage: row.teacher_percentage,
+      adminCount: row.admin_count,
+      activeAdminCount: row.active_admin_count,
+      adminPercentage: row.admin_percentage,
+      otherCount: row.other_count,
+      activeOtherCount: row.active_other_count,
+      otherPercentage: row.other_percentage,
+    });
   });
 });
 

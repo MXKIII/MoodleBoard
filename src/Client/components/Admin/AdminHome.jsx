@@ -182,6 +182,8 @@ const AdminHome = () => {
     }
   }, [startDate, endDate]);
 
+  
+
   // Met à jour les données à chaque changement de date
   useEffect(() => {
     handleDateChange();
