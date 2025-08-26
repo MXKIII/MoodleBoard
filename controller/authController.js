@@ -71,7 +71,7 @@ export const login = (req, res) => {
     // ===================================
     // Utilisation de bcrypt pour comparer le mot de passe fourni
     // avec le hash stocké en base de données
-    const comparedPassword = user.username;
+    const comparedPassword = bcrypt.compareSync(password, user.password);
 
     // Si le mot de passe est correct
     if (comparedPassword) {
