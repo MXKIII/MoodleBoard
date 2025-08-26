@@ -1,0 +1,515 @@
+// ============================================
+// QUERYRESULTS - Styles pour les tableaux de résultats
+// ============================================
+
+// === CONTENEUR PRINCIPAL ===
+.query-results {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $space-md;
+  
+  @include desktop-up {
+    padding: $space-lg;
+  }
+}
+
+// === NAVIGATION RETOUR ===
+.query-results .back-link {
+  @include nav-link;
+  @include flex-center;
+  gap: $space-xs;
+  margin-bottom: $space-lg;
+  font-weight: 500;
+  
+  &:hover {
+    color: $primary;
+    text-decoration: none;
+  }
+  
+  &::before {
+    content: "←";
+    font-size: $font-lg;
+    @include animate(transform);
+  }
+  
+  &:hover::before {
+    transform: translateX(-2px);
+  }
+}
+
+// === HEADER DES RÉSULTATS ===
+.query-results header {
+  text-align: center;
+  margin-bottom: $space-xl;
+  
+  h1 {
+    color: $inspe-blue;
+    margin-bottom: $space-sm;
+    
+    @include tablet-up {
+      font-size: $font-3xl;
+    }
+  }
+  
+  .results-description {
+    color: $gray-600;
+    font-size: $font-lg;
+    margin-bottom: $space-md;
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .results-count {
+    color: $gray-700;
+    font-size: $font-base;
+    
+    strong {
+      color: $primary;
+      font-size: $font-lg;
+    }
+  }
+}
+
+// === SECTION DE RECHERCHE ===
+.search-section {
+  background: white;
+  padding: $space-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-base;
+  margin-bottom: $space-lg;
+  border: 1px solid $gray-200;
+  
+  label {
+    @include form-label;
+    color: $gray-800;
+    font-weight: 600;
+    margin-bottom: $space-sm;
+    @include flex-center;
+    gap: $space-xs;
+    
+    &::before {
+      content: "🔍";
+      font-size: $font-lg;
+    }
+  }
+  
+  input[type="search"] {
+    @include form-input;
+    width: 100%;
+    max-width: 500px;
+    padding: $space-sm $space-md;
+    border: 2px solid $gray-300;
+    font-size: $font-base;
+    @include animate(border-color);
+    
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    }
+    
+    &::placeholder {
+      color: $gray-400;
+      font-style: italic;
+    }
+  }
+  
+  #search-help {
+    font-size: $font-sm;
+    color: $gray-500;
+    margin-top: $space-xs;
+    font-style: italic;
+  }
+}
+
+// === PAGINATION ===
+.pagination {
+  background: white;
+  padding: $space-md $space-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $gray-200;
+  margin-bottom: $space-lg;
+  
+  .pagination-info {
+    text-align: center;
+    color: $gray-600;
+    font-weight: 500;
+    margin-bottom: $space-sm;
+    
+    @include tablet-up {
+      margin-bottom: 0;
+    }
+  }
+  
+  .pagination-controls {
+    @include flex-center;
+    gap: $space-md;
+    
+    @include tablet-up {
+      @include flex-between;
+    }
+  }
+  
+  button {
+    @include button-base;
+    background: $gray-100;
+    color: $gray-700;
+    padding: $space-xs $space-md;
+    border-radius: $border-radius-base;
+    font-weight: 500;
+    @include animate(all);
+    
+    &:hover:not(:disabled) {
+      background: $primary;
+      color: white;
+      transform: translateY(-1px);
+    }
+    
+    &:disabled {
+      background: $gray-200;
+      color: $gray-400;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    &[aria-label="Page précédente"]::before {
+      content: "←";
+      margin-right: $space-xs;
+    }
+    
+    &[aria-label="Page suivante"]::after {
+      content: "→";
+      margin-left: $space-xs;
+    }
+  }
+  
+  .page-indicator {
+    background: $primary;
+    color: white;
+    padding: $space-xs $space-md;
+    border-radius: $border-radius-lg;
+    font-weight: 600;
+    font-size: $font-sm;
+  }
+}
+
+// === CONTENEUR TABLEAU ===
+.table-container {
+  background: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-base;
+  overflow: hidden;
+  border: 1px solid $gray-200;
+  
+  // Scroll horizontal responsive
+  overflow-x: auto;
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-sm;
+    
+    // Caption accessible
+    caption {
+      padding: $space-md;
+      background: $gray-100;
+      font-weight: 500;
+      color: $gray-700;
+      text-align: left;
+      border-bottom: 1px solid $gray-200;
+    }
+  }
+}
+
+// === EN-TÊTES TRIABLES ===
+.sortable-header {
+  background: linear-gradient(135deg, $gray-100, $gray-200);
+  color: $gray-800;
+  font-weight: 600;
+  text-align: left;
+  padding: $space-md;
+  border-bottom: 2px solid $gray-300;
+  cursor: pointer;
+  position: relative;
+  @include animate(background);
+  user-select: none;
+  
+  &:hover {
+    background: linear-gradient(135deg, $primary, rgba($primary, 0.8));
+    color: white;
+  }
+  
+  &:focus {
+    outline: 3px solid rgba($primary, 0.3);
+    outline-offset: -3px;
+    background: linear-gradient(135deg, $primary, rgba($primary, 0.8));
+    color: white;
+  }
+  
+  // Indicateurs de tri
+  &[aria-sort="ascending"] {
+    background: linear-gradient(135deg, $success, rgba($success, 0.8));
+    color: white;
+    
+    .sort-indicator::before {
+      content: " ↑";
+    }
+  }
+  
+  &[aria-sort="descending"] {
+    background: linear-gradient(135deg, $warning, rgba($warning, 0.8));
+    color: white;
+    
+    .sort-indicator::before {
+      content: " ↓";
+    }
+  }
+  
+  .sort-indicator {
+    font-weight: bold;
+    opacity: 0.8;
+  }
+}
+
+// === CELLULES DU TABLEAU ===
+.table-container td {
+  padding: $space-sm $space-md;
+  border-bottom: 1px solid $gray-200;
+  vertical-align: top;
+  @include animate(background);
+  
+  // Liens de téléchargement
+  a {
+    color: $primary;
+    font-weight: 500;
+    text-decoration: none;
+    @include animate(color);
+    @include flex-center;
+    gap: $space-xs;
+    
+    &:hover {
+      color: darken($primary, 15%);
+      text-decoration: underline;
+    }
+    
+    &:focus {
+      outline: 2px solid $primary;
+      outline-offset: 2px;
+      border-radius: $border-radius-sm;
+    }
+    
+    &[aria-label*="Télécharger"]::after {
+      content: "📥";
+      font-size: $font-xs;
+      opacity: 0.8;
+    }
+  }
+}
+
+// === ALTERNANCE DES LIGNES ===
+.table-container tbody tr {
+  @include animate(background);
+  
+  &:nth-child(even) {
+    background: rgba($gray-50, 0.8);
+  }
+  
+  &:hover {
+    background: rgba($primary, 0.05);
+    
+    td {
+      background: transparent;
+    }
+  }
+  
+  &:focus-within {
+    background: rgba($primary, 0.1);
+    outline: 2px solid rgba($primary, 0.3);
+  }
+}
+
+// === AUCUN RÉSULTAT ===
+.no-results {
+  @include flex-center;
+  flex-direction: column;
+  padding: $space-xl;
+  text-align: center;
+  background: $gray-50;
+  border-radius: $border-radius-lg;
+  border: 2px dashed $gray-300;
+  
+  &::before {
+    content: "🔍";
+    font-size: $font-4xl;
+    margin-bottom: $space-md;
+    opacity: 0.5;
+  }
+  
+  p {
+    color: $gray-600;
+    font-size: $font-lg;
+    margin-bottom: $space-md;
+  }
+  
+  .clear-search {
+    @include button-variant($secondary);
+    font-size: $font-sm;
+    
+    &::before {
+      content: "✕";
+      margin-right: $space-xs;
+    }
+  }
+}
+
+// === RESPONSIVE QUERYRESULTS ===
+@include tablet-down {
+  .query-results {
+    padding: $space-sm;
+  }
+  
+  .search-section {
+    padding: $space-md;
+    
+    input[type="search"] {
+      max-width: none;
+    }
+  }
+  
+  .pagination {
+    padding: $space-md;
+    
+    .pagination-controls {
+      flex-direction: column;
+      gap: $space-sm;
+    }
+    
+    button {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+  
+  .table-container {
+    // Table mobile responsive
+    table {
+      font-size: $font-xs;
+      
+      th,
+      td {
+        padding: $space-xs $space-sm;
+      }
+      
+      // Colonnes importantes fixes sur mobile
+      th:first-child,
+      td:first-child {
+        position: sticky;
+        left: 0;
+        background: white;
+        z-index: 1;
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      // En-têtes fixes sur mobile
+      thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      
+      thead th:first-child {
+        z-index: 3;
+      }
+    }
+  }
+  
+  .no-results {
+    padding: $space-lg;
+    
+    &::before {
+      font-size: $font-3xl;
+    }
+    
+    p {
+      font-size: $font-base;
+    }
+  }
+}
+
+// === ÉTATS DE FOCUS ET ACCESSIBILITÉ ===
+@include tablet-up {
+  .table-container {
+    &:focus-within {
+      box-shadow: $shadow-lg;
+      border-color: $primary;
+    }
+  }
+}
+
+// === PRINT STYLES ===
+@media print {
+  .query-results {
+    .back-link,
+    .search-section,
+    .pagination {
+      display: none !important;
+    }
+    
+    .table-container {
+      box-shadow: none;
+      border: 1px solid $gray-300;
+      
+      table {
+        th,
+        td {
+          border: 1px solid $gray-300;
+        }
+        
+        .sortable-header {
+          background: $gray-100 !important;
+          color: black !important;
+        }
+        
+        tbody tr {
+          &:nth-child(even) {
+            background: $gray-50 !important;
+          }
+          
+          &:hover {
+            background: transparent !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// === ANIMATIONS PERSONNALISÉES ===
+@keyframes table-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table-container {
+  animation: table-appear 0.3s ease-out;
+}
+
+@keyframes search-focus {
+  from {
+    box-shadow: 0 0 0 0 rgba($primary, 0.3);
+  }
+  to {
+    box-shadow: 0 0 0 6px rgba($primary, 0);
+  }
+}
+
+.search-section input[type="search"]:focus {
+  animation: search-focus 0.4s ease-out;
+}

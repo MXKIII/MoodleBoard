@@ -1,0 +1,579 @@
+// ============================================
+// NEWSFEED - Composants pour le fil d'actualités
+// ============================================
+
+// === CONTENEUR PRINCIPAL ===
+.newsfeed-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $space-md;
+}
+
+// === HEADER DU NEWSFEED ===
+.newsfeed-header {
+  @include flex-between;
+  margin-bottom: $space-xl;
+  padding-bottom: $space-lg;
+  border-bottom: 2px solid $gray-200;
+  
+  .newsfeed-title {
+    color: $inspe-blue;
+    @include flex-center;
+    gap: $space-sm;
+    
+    &::before {
+      content: "📰";
+      font-size: $font-xl;
+    }
+  }
+  
+  .newsfeed-actions {
+    @include flex-center;
+    gap: $space-sm;
+    
+    .add-post-btn {
+      @include button-variant($primary);
+      @include flex-center;
+      gap: $space-xs;
+      
+      &::before {
+        content: "➕";
+      }
+    }
+    
+    .refresh-btn {
+      @include button-base;
+      background: $gray-100;
+      color: $gray-700;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      
+      &::before {
+        content: "🔄";
+      }
+      
+      &:hover {
+        background: $gray-200;
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+// === FILTRES ===
+.newsfeed-filters {
+  background: white;
+  padding: $space-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-base;
+  margin-bottom: $space-xl;
+  
+  .filters-header {
+    margin-bottom: $space-md;
+    
+    .filters-title {
+      color: $gray-700;
+      font-size: $font-lg;
+      margin-bottom: $space-xs;
+      
+      &::before {
+        content: "🔍 ";
+        margin-right: $space-xs;
+      }
+    }
+  }
+  
+  .filters-content {
+    @include flex-center;
+    gap: $space-md;
+    flex-wrap: wrap;
+    
+    .filter-group {
+      @include flex-center;
+      gap: $space-xs;
+      
+      label {
+        font-weight: 500;
+        color: $gray-600;
+        font-size: $font-sm;
+      }
+      
+      select {
+        @include form-input;
+        min-width: 150px;
+      }
+    }
+    
+    .search-group {
+      flex: 1;
+      min-width: 200px;
+      
+      input[type="search"] {
+        @include form-input;
+        width: 100%;
+        
+        &::placeholder {
+          color: $gray-400;
+        }
+      }
+    }
+  }
+}
+
+// === LISTE DES POSTS ===
+.posts-list {
+  @include nav-list;
+  
+  .post-item {
+    margin-bottom: $space-xl;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// === CARTE DE POST ===
+.post-card {
+  @include card-base;
+  @include animate(transform);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+  
+  .post-header {
+    @include flex-between;
+    margin-bottom: $space-md;
+    padding-bottom: $space-sm;
+    border-bottom: 1px solid $gray-200;
+    
+    .post-author {
+      @include flex-center;
+      gap: $space-sm;
+      
+      .author-avatar {
+        width: 3rem;
+        height: 3rem;
+        background: $primary;
+        color: white;
+        border-radius: 50%;
+        @include flex-center;
+        font-weight: 600;
+        font-size: $font-lg;
+      }
+      
+      .author-info {
+        .author-name {
+          font-weight: 600;
+          color: $gray-900;
+          margin-bottom: 0.125rem;
+        }
+        
+        .author-role {
+          font-size: $font-xs;
+          color: $gray-500;
+          padding: 0.125rem 0.5rem;
+          background: $gray-100;
+          border-radius: $border-radius-lg;
+        }
+      }
+    }
+    
+    .post-meta {
+      text-align: right;
+      
+      .post-date {
+        font-size: $font-sm;
+        color: $gray-500;
+        margin-bottom: $space-xs;
+      }
+      
+      .post-actions {
+        @include flex-center;
+        gap: $space-xs;
+        
+        .action-btn {
+          @include button-base;
+          background: transparent;
+          color: $gray-500;
+          padding: $space-xs;
+          border-radius: 50%;
+          width: 2rem;
+          height: 2rem;
+          
+          &:hover {
+            background: $gray-100;
+          }
+          
+          &.edit-btn:hover {
+            color: $warning;
+            background: rgba($warning, 0.1);
+          }
+          
+          &.delete-btn:hover {
+            color: $error;
+            background: rgba($error, 0.1);
+          }
+        }
+      }
+    }
+  }
+  
+  .post-content {
+    margin-bottom: $space-md;
+    
+    .post-title {
+      font-size: $font-xl;
+      font-weight: 600;
+      color: $gray-900;
+      margin-bottom: $space-sm;
+    }
+    
+    .post-text {
+      color: $gray-700;
+      line-height: 1.6;
+      
+      p {
+        margin-bottom: $space-sm;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  
+  .post-footer {
+    @include flex-between;
+    padding-top: $space-sm;
+    border-top: 1px solid $gray-200;
+    
+    .post-stats {
+      @include flex-center;
+      gap: $space-md;
+      
+      .stat-item {
+        @include flex-center;
+        gap: $space-xs;
+        font-size: $font-sm;
+        color: $gray-500;
+        
+        .stat-icon {
+          font-size: $font-base;
+        }
+        
+        &.likes-stat {
+          .stat-icon::before {
+            content: "👍";
+          }
+        }
+        
+        &.comments-stat {
+          .stat-icon::before {
+            content: "💬";
+          }
+        }
+        
+        &.views-stat {
+          .stat-icon::before {
+            content: "👁️";
+          }
+        }
+      }
+    }
+    
+    .post-category {
+      background: rgba($primary, 0.1);
+      color: $primary;
+      padding: 0.25rem 0.5rem;
+      border-radius: $border-radius-lg;
+      font-size: $font-xs;
+      font-weight: 500;
+    }
+  }
+}
+
+// === FORMULAIRE DE NOUVEAU POST ===
+.new-post-form {
+  @include card-base;
+  margin-bottom: $space-xl;
+  
+  .form-header {
+    @include flex-between;
+    margin-bottom: $space-lg;
+    padding-bottom: $space-md;
+    border-bottom: 1px solid $gray-200;
+    
+    .form-title {
+      color: $primary;
+      @include flex-center;
+      gap: $space-xs;
+      
+      &::before {
+        content: "✏️";
+      }
+    }
+    
+    .form-actions {
+      @include flex-center;
+      gap: $space-sm;
+      
+      .cancel-btn {
+        @include button-base;
+        background: $gray-100;
+        color: $gray-700;
+        
+        &:hover {
+          background: $gray-200;
+        }
+      }
+      
+      .submit-btn {
+        @include button-variant($primary);
+        
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+  
+  .form-content {
+    .form-group {
+      margin-bottom: $space-md;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      label {
+        @include form-label;
+      }
+      
+      input,
+      textarea,
+      select {
+        @include form-input;
+        width: 100%;
+      }
+      
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+    }
+  }
+}
+
+// === MODALES ===
+.post-modal {
+  .modal-content {
+    max-width: 600px;
+    
+    .modal-header {
+      @include flex-between;
+      margin-bottom: $space-lg;
+      padding-bottom: $space-md;
+      border-bottom: 1px solid $gray-200;
+      
+      .modal-title {
+        color: $primary;
+        margin: 0;
+      }
+      
+      .modal-close {
+        @include button-base;
+        background: transparent;
+        color: $gray-500;
+        padding: $space-xs;
+        border-radius: 50%;
+        
+        &:hover {
+          background: $gray-100;
+        }
+      }
+    }
+  }
+}
+
+.delete-confirmation-modal {
+  .modal-content {
+    max-width: 400px;
+    text-align: center;
+    
+    .warning-icon {
+      font-size: $font-4xl;
+      color: $error;
+      margin-bottom: $space-md;
+      
+      &::before {
+        content: "⚠️";
+      }
+    }
+    
+    .warning-title {
+      color: $error;
+      margin-bottom: $space-sm;
+    }
+    
+    .warning-message {
+      color: $gray-600;
+      margin-bottom: $space-lg;
+    }
+    
+    .confirmation-actions {
+      @include flex-center;
+      gap: $space-md;
+      
+      .cancel-btn {
+        @include button-base;
+        background: $gray-100;
+        color: $gray-700;
+        
+        &:hover {
+          background: $gray-200;
+        }
+      }
+      
+      .confirm-btn {
+        @include button-variant($error);
+      }
+    }
+  }
+}
+
+// === ÉTATS ===
+.newsfeed-loading {
+  @include flex-center;
+  flex-direction: column;
+  padding: $space-xl;
+  text-align: center;
+  
+  .loading-spinner {
+    @include loading-spinner;
+    margin-bottom: $space-md;
+  }
+  
+  .loading-message {
+    color: $gray-600;
+  }
+}
+
+.newsfeed-empty {
+  @include card-base;
+  text-align: center;
+  padding: $space-xl;
+  
+  .empty-icon {
+    font-size: $font-4xl;
+    color: $gray-400;
+    margin-bottom: $space-md;
+    
+    &::before {
+      content: "📝";
+    }
+  }
+  
+  .empty-title {
+    color: $gray-600;
+    margin-bottom: $space-sm;
+  }
+  
+  .empty-message {
+    color: $gray-500;
+    font-size: $font-sm;
+    margin-bottom: $space-lg;
+  }
+  
+  .empty-action {
+    @include button-variant($primary);
+  }
+}
+
+.newsfeed-error {
+  @include error-message;
+  @include flex-center;
+  gap: $space-sm;
+  margin-bottom: $space-lg;
+  
+  .error-icon {
+    font-size: $font-lg;
+    
+    &::before {
+      content: "⚠️";
+    }
+  }
+}
+
+// === RESPONSIVE NEWSFEED ===
+@include tablet-down {
+  .newsfeed-container {
+    padding: $space-sm;
+  }
+  
+  .newsfeed-header {
+    flex-direction: column;
+    gap: $space-md;
+    align-items: stretch;
+    
+    .newsfeed-actions {
+      justify-content: center;
+    }
+  }
+  
+  .newsfeed-filters {
+    .filters-content {
+      flex-direction: column;
+      align-items: stretch;
+      
+      .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        
+        select {
+          min-width: auto;
+        }
+      }
+      
+      .search-group {
+        min-width: auto;
+      }
+    }
+  }
+  
+  .post-card {
+    .post-header {
+      flex-direction: column;
+      gap: $space-sm;
+      
+      .post-meta {
+        text-align: left;
+        
+        .post-actions {
+          justify-content: flex-start;
+        }
+      }
+    }
+    
+    .post-footer {
+      flex-direction: column;
+      gap: $space-sm;
+      align-items: flex-start;
+    }
+  }
+  
+  .new-post-form {
+    .form-header {
+      flex-direction: column;
+      gap: $space-sm;
+      
+      .form-actions {
+        justify-content: center;
+      }
+    }
+  }
+}

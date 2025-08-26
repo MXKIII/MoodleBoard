@@ -1,0 +1,111 @@
+// ============================================
+// UTILITIES - Classes utilitaires
+// ============================================
+
+// === CONTENEURS ===
+@mixin container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $space-md;
+}
+
+.container {
+  @include container;
+}
+
+// === FLEXBOX ===
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// === GRILLES ===
+.grid {
+  display: grid;
+}
+
+.grid-auto {
+  @include stats-grid();
+}
+
+// === ESPACEMENTS ===
+.m-0 { margin: 0; }
+.mt-xs { margin-top: $space-xs; }
+.mt-sm { margin-top: $space-sm; }
+.mt-md { margin-top: $space-md; }
+.mt-lg { margin-top: $space-lg; }
+.mt-xl { margin-top: $space-xl; }
+
+.mb-xs { margin-bottom: $space-xs; }
+.mb-sm { margin-bottom: $space-sm; }
+.mb-md { margin-bottom: $space-md; }
+.mb-lg { margin-bottom: $space-lg; }
+.mb-xl { margin-bottom: $space-xl; }
+
+.p-0 { padding: 0; }
+.p-xs { padding: $space-xs; }
+.p-sm { padding: $space-sm; }
+.p-md { padding: $space-md; }
+.p-lg { padding: $space-lg; }
+.p-xl { padding: $space-xl; }
+
+// === COULEURS ===
+.text-primary { color: $primary; }
+.text-secondary { color: $secondary; }
+.text-success { color: $success; }
+.text-error { color: $error; }
+.text-warning { color: $warning; }
+.text-info { color: $info; }
+
+.bg-primary { background: $primary; }
+.bg-secondary { background: $secondary; }
+.bg-success { background: $success; }
+.bg-error { background: $error; }
+.bg-warning { background: $warning; }
+.bg-info { background: $info; }
+
+// === TAILLES ===
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+// === AFFICHAGE ===
+.hidden { display: none; }
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+
+// === RESPONSIVE ===
+@include tablet-down {
+  .hidden-mobile { display: none; }
+}
+
+@include tablet-up {
+  .hidden-tablet { display: none; }
+}
+
+@include desktop-up {
+  .hidden-desktop { display: none; }
+}
+
+// === PRINT ===
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}

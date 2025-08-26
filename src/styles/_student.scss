@@ -1,0 +1,498 @@
+// ============================================
+// STUDENT - Composants spécifiques aux étudiants
+// ============================================
+
+// === DASHBOARD ÉTUDIANT ===
+.student-dashboard {
+  .dashboard-title {
+    color: $primary;
+    
+    &::before {
+      content: "🎓 ";
+      margin-right: $space-xs;
+    }
+  }
+  
+  .dashboard-subtitle {
+    .user-context {
+      color: $primary;
+      font-weight: 500;
+    }
+  }
+}
+
+// === STATISTIQUES PRINCIPALES ÉTUDIANT ===
+.student-main-stats {
+  .stats-grid {
+    @include stats-grid(280px);
+  }
+  
+  .stat-card {
+    &.student-stat {
+      border-left: 4px solid $primary;
+      
+      .stat-icon {
+        color: $primary;
+        background: rgba($primary, 0.1);
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        @include flex-center;
+        font-size: $font-xl;
+      }
+      
+      .stat-value {
+        color: $primary;
+      }
+    }
+    
+    // Types de statistiques spécifiques
+    &.courses-stat {
+      .stat-icon::before {
+        content: "📚";
+      }
+      
+      &:hover {
+        .stat-icon {
+          background: rgba($info, 0.1);
+          color: $info;
+        }
+      }
+    }
+    
+    &.activities-stat {
+      .stat-icon::before {
+        content: "📝";
+      }
+      
+      &:hover {
+        .stat-icon {
+          background: rgba($success, 0.1);
+          color: $success;
+        }
+      }
+    }
+    
+    &.progress-stat {
+      .stat-icon::before {
+        content: "📊";
+      }
+      
+      &:hover {
+        .stat-icon {
+          background: rgba($warning, 0.1);
+          color: $warning;
+        }
+      }
+    }
+  }
+}
+
+// === PROGRESSION GLOBALE ===
+.global-progress-section {
+  background: linear-gradient(135deg, $primary, rgba($primary, 0.8));
+  color: white;
+  padding: $space-xl;
+  border-radius: $border-radius-lg;
+  margin-bottom: $space-xl;
+  
+  .progress-header {
+    text-align: center;
+    margin-bottom: $space-lg;
+    
+    .progress-title {
+      font-size: $font-2xl;
+      margin-bottom: $space-sm;
+      
+      &::before {
+        content: "🎯 ";
+        margin-right: $space-xs;
+      }
+    }
+    
+    .progress-subtitle {
+      opacity: 0.9;
+      font-size: $font-lg;
+    }
+  }
+  
+  .progress-visual {
+    max-width: 600px;
+    margin: 0 auto $space-lg;
+    
+    .progress-circle {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto $space-md;
+      
+      .progress-ring {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: conic-gradient(
+          white 0deg,
+          white calc(var(--progress, 0) * 3.6deg),
+          rgba(white, 0.2) calc(var(--progress, 0) * 3.6deg),
+          rgba(white, 0.2) 360deg
+        );
+        @include flex-center;
+        
+        .progress-inner {
+          width: 160px;
+          height: 160px;
+          background: rgba(white, 0.1);
+          border-radius: 50%;
+          @include flex-center;
+          flex-direction: column;
+          
+          .progress-number {
+            font-size: $font-4xl;
+            font-weight: 700;
+            margin-bottom: $space-xs;
+          }
+          
+          .progress-label {
+            font-size: $font-sm;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+    
+    .progress-breakdown {
+      display: grid;
+      gap: $space-md;
+      
+      @include tablet-up {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .breakdown-item {
+        text-align: center;
+        padding: $space-md;
+        background: rgba(white, 0.1);
+        border-radius: $border-radius-base;
+        
+        .breakdown-number {
+          font-size: $font-xl;
+          font-weight: 700;
+          margin-bottom: $space-xs;
+        }
+        
+        .breakdown-label {
+          font-size: $font-sm;
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+// === STATISTIQUES SECONDAIRES ÉTUDIANT ===
+.student-secondary-stats {
+  .secondary-container {
+    display: grid;
+    gap: $space-lg;
+    
+    @include desktop-up {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  
+  .events-section {
+    .events-header {
+      @include flex-between;
+      margin-bottom: $space-md;
+      
+      .events-title {
+        color: $info;
+        @include flex-center;
+        gap: $space-xs;
+        
+        &::before {
+          content: "📅";
+        }
+      }
+    }
+    
+    .events-summary {
+      @include card-base;
+      background: linear-gradient(135deg, $info, rgba($info, 0.8));
+      color: white;
+      text-align: center;
+      
+      .events-icon {
+        font-size: $font-3xl;
+        margin-bottom: $space-sm;
+        
+        &::before {
+          content: "🗓️";
+        }
+      }
+      
+      .events-count {
+        font-size: $font-4xl;
+        font-weight: 700;
+        margin-bottom: $space-xs;
+      }
+      
+      .events-label {
+        font-size: $font-lg;
+        opacity: 0.9;
+      }
+    }
+  }
+  
+  .badges-section {
+    .badges-header {
+      margin-bottom: $space-md;
+      
+      .badges-title {
+        color: $warning;
+        @include flex-center;
+        gap: $space-xs;
+        
+        &::before {
+          content: "🏆";
+        }
+      }
+    }
+    
+    .badges-grid {
+      @include stats-grid(120px, $space-sm);
+      
+      .badge-item {
+        @include card-base;
+        text-align: center;
+        padding: $space-sm;
+        @include animate(transform);
+        
+        &:hover {
+          transform: translateY(-2px);
+        }
+        
+        .badge-icon {
+          font-size: $font-2xl;
+          margin-bottom: $space-xs;
+        }
+        
+        .badge-name {
+          font-size: $font-xs;
+          color: $gray-600;
+          font-weight: 500;
+        }
+      }
+    }
+    
+    .no-badges {
+      @include card-base;
+      text-align: center;
+      padding: $space-lg;
+      color: $gray-500;
+      
+      .no-badges-icon {
+        font-size: $font-3xl;
+        margin-bottom: $space-sm;
+        opacity: 0.5;
+        
+        &::before {
+          content: "🎯";
+        }
+      }
+      
+      .no-badges-message {
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// === MESSAGES DE MOTIVATION ===
+.motivation-section {
+  margin-top: $space-xl;
+  
+  .motivation {
+    padding: $space-lg;
+    border-radius: $border-radius-lg;
+    text-align: center;
+    font-weight: 500;
+    font-size: $font-lg;
+    margin-bottom: $space-md;
+    
+    &.motivation--excellent {
+      background: linear-gradient(135deg, $success, rgba($success, 0.8));
+      color: white;
+      
+      &::before {
+        content: "🌟 ";
+        margin-right: $space-xs;
+      }
+    }
+    
+    &.motivation--good {
+      background: linear-gradient(135deg, $primary, rgba($primary, 0.8));
+      color: white;
+      
+      &::before {
+        content: "👍 ";
+        margin-right: $space-xs;
+      }
+    }
+    
+    &.motivation--encourage {
+      background: linear-gradient(135deg, $warning, rgba($warning, 0.8));
+      color: white;
+      
+      &::before {
+        content: "💪 ";
+        margin-right: $space-xs;
+      }
+    }
+  }
+}
+
+// === ACTIVITÉS RESTANTES ===
+.remaining-activities {
+  @include card-base;
+  border-left: 4px solid $warning;
+  background: rgba($warning, 0.05);
+  margin-top: $space-lg;
+  
+  .remaining-header {
+    @include flex-between;
+    margin-bottom: $space-md;
+    
+    .remaining-title {
+      color: $warning;
+      @include flex-center;
+      gap: $space-xs;
+      
+      &::before {
+        content: "⏰";
+      }
+    }
+    
+    .remaining-count {
+      background: $warning;
+      color: white;
+      padding: $space-xs $space-sm;
+      border-radius: $border-radius-lg;
+      font-weight: 600;
+      font-size: $font-sm;
+    }
+  }
+  
+  .remaining-description {
+    color: $gray-600;
+    font-size: $font-sm;
+  }
+  
+  .remaining-actions {
+    margin-top: $space-md;
+    
+    .view-activities-btn {
+      @include button-variant($warning);
+      font-size: $font-sm;
+    }
+  }
+}
+
+// === CONSEILS D'ENGAGEMENT ===
+.engagement-tips {
+  background: $gray-50;
+  border-radius: $border-radius-lg;
+  padding: $space-lg;
+  margin-top: $space-xl;
+  border: 1px solid $gray-200;
+  
+  .tips-header {
+    text-align: center;
+    margin-bottom: $space-lg;
+    
+    .tips-title {
+      color: $inspe-blue;
+      @include flex-center;
+      gap: $space-xs;
+      justify-content: center;
+      
+      &::before {
+        content: "💡";
+      }
+    }
+  }
+  
+  .tips-list {
+    @include nav-list;
+    
+    .tip-item {
+      @include flex-center;
+      gap: $space-sm;
+      padding: $space-sm;
+      background: white;
+      border-radius: $border-radius-base;
+      margin-bottom: $space-sm;
+      box-shadow: $shadow-sm;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      .tip-icon {
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+        background: rgba($primary, 0.1);
+        border-radius: 50%;
+        @include flex-center;
+        color: $primary;
+      }
+      
+      .tip-text {
+        color: $gray-700;
+        font-size: $font-sm;
+      }
+    }
+  }
+}
+
+// === RESPONSIVE ÉTUDIANT ===
+@include tablet-down {
+  .global-progress-section {
+    .progress-visual {
+      .progress-circle {
+        width: 150px;
+        height: 150px;
+        
+        .progress-ring {
+          .progress-inner {
+            width: 120px;
+            height: 120px;
+            
+            .progress-number {
+              font-size: $font-3xl;
+            }
+          }
+        }
+      }
+      
+      .progress-breakdown {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+  
+  .student-secondary-stats {
+    .secondary-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .remaining-activities {
+    .remaining-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $space-sm;
+    }
+  }
+}

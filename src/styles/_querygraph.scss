@@ -1,0 +1,483 @@
+// ============================================
+// QUERYGRAPH - Styles pour les graphiques d'activité
+// ============================================
+
+// === CONTENEUR PRINCIPAL ===
+.query-graph {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $space-md;
+  
+  @include desktop-up {
+    padding: $space-lg;
+  }
+}
+
+// === NAVIGATION RETOUR ===
+.back-link {
+  @include nav-link;
+  @include flex-center;
+  gap: $space-xs;
+  margin-bottom: $space-lg;
+  font-weight: 500;
+  
+  &:hover {
+    color: $primary;
+    text-decoration: none;
+  }
+  
+  &::before {
+    content: "←";
+    font-size: $font-lg;
+    @include animate(transform);
+  }
+  
+  &:hover::before {
+    transform: translateX(-2px);
+  }
+}
+
+// === HEADER DU GRAPHIQUE ===
+.query-graph header {
+  text-align: center;
+  margin-bottom: $space-xl;
+  
+  h1 {
+    color: $inspe-blue;
+    margin-bottom: $space-sm;
+    
+    @include tablet-up {
+      font-size: $font-3xl;
+    }
+  }
+  
+  p {
+    color: $gray-600;
+    font-size: $font-lg;
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+}
+
+// === CONTENEUR GRAPHIQUE ===
+.chart-container {
+  background: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-base;
+  padding: $space-lg;
+  margin-bottom: $space-xl;
+  position: relative;
+  
+  // Responsive du graphique
+  canvas {
+    cursor: crosshair;
+    @include animate(all);
+    
+    &:hover {
+      box-shadow: 0 0 20px rgba($primary, 0.1);
+    }
+  }
+  
+  // Indicateur de chargement
+  &.loading {
+    @include flex-center;
+    min-height: 400px;
+    
+    &::before {
+      content: "";
+      @include loading-spinner;
+      margin-bottom: $space-md;
+    }
+    
+    &::after {
+      content: "Chargement du graphique...";
+      color: $gray-600;
+      font-weight: 500;
+    }
+  }
+}
+
+// === MESSAGE AUCUNE DONNÉE ===
+.no-data {
+  @include flex-center;
+  flex-direction: column;
+  padding: $space-xl;
+  text-align: center;
+  background: $gray-50;
+  border-radius: $border-radius-lg;
+  border: 2px dashed $gray-300;
+  
+  &::before {
+    content: "📊";
+    font-size: $font-4xl;
+    margin-bottom: $space-md;
+    opacity: 0.5;
+  }
+  
+  p {
+    color: $gray-600;
+    font-size: $font-lg;
+    margin: 0;
+  }
+}
+
+// === DÉTAILS DE DATE SÉLECTIONNÉE ===
+.date-details {
+  background: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  border: 1px solid $gray-200;
+  margin-top: $space-xl;
+  @include animate(all);
+  
+  // Animation d'apparition
+  &:focus {
+    box-shadow: $shadow-xl;
+    border-color: $primary;
+  }
+}
+
+// === HEADER DES DÉTAILS ===
+.details-header {
+  @include flex-between;
+  padding: $space-lg;
+  border-bottom: 1px solid $gray-200;
+  background: linear-gradient(135deg, $primary, rgba($primary, 0.8));
+  color: white;
+  border-radius: $border-radius-lg $border-radius-lg 0 0;
+  
+  h2 {
+    margin: 0;
+    color: white;
+    font-size: $font-xl;
+    @include flex-center;
+    gap: $space-xs;
+    
+    &::before {
+      content: "📅";
+      font-size: $font-lg;
+    }
+  }
+  
+  .close-details {
+    @include button-base;
+    background: rgba(white, 0.2);
+    color: white;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: $font-xl;
+    font-weight: bold;
+    @include animate(background);
+    
+    &:hover {
+      background: rgba(white, 0.3);
+      transform: scale(1.1);
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(white, 0.5);
+    }
+  }
+}
+
+// === SECTION DE RECHERCHE DANS LES DÉTAILS ===
+.date-details .search-section {
+  padding: $space-lg;
+  background: $gray-50;
+  border-bottom: 1px solid $gray-200;
+  
+  label {
+    @include form-label;
+    color: $gray-700;
+    margin-bottom: $space-sm;
+  }
+  
+  input[type="search"] {
+    @include form-input;
+    width: 100%;
+    max-width: 400px;
+    border-color: $primary;
+    
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    }
+    
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+  
+  #search-help {
+    font-size: $font-sm;
+    color: $gray-500;
+    margin-top: $space-xs;
+  }
+}
+
+// === ÉTATS DE CHARGEMENT ET ERREUR ===
+.date-details .loading {
+  @include flex-center;
+  padding: $space-xl;
+  color: $primary;
+  font-weight: 500;
+  
+  &::before {
+    content: "";
+    @include loading-spinner;
+    margin-right: $space-sm;
+    border-color: $primary transparent $primary transparent;
+  }
+}
+
+.date-details .error {
+  @include error-message;
+  margin: $space-lg;
+  @include flex-center;
+  gap: $space-sm;
+  
+  &::before {
+    content: "⚠️";
+    font-size: $font-lg;
+  }
+}
+
+// === CONTENEUR TABLEAU DÉTAILS ===
+.date-details .table-container {
+  padding: $space-lg;
+  overflow-x: auto;
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-sm;
+    
+    caption {
+      text-align: left;
+      font-weight: 500;
+      color: $gray-700;
+      margin-bottom: $space-md;
+      padding: $space-sm;
+      background: $gray-100;
+      border-radius: $border-radius-base;
+    }
+    
+    th {
+      background: $gray-100;
+      color: $gray-800;
+      font-weight: 600;
+      text-align: left;
+      padding: $space-sm $space-md;
+      border-bottom: 2px solid $gray-300;
+      font-size: $font-xs;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      
+      &:first-child {
+        border-radius: $border-radius-sm 0 0 0;
+      }
+      
+      &:last-child {
+        border-radius: 0 $border-radius-sm 0 0;
+      }
+    }
+    
+    td {
+      padding: $space-sm $space-md;
+      border-bottom: 1px solid $gray-200;
+      vertical-align: top;
+      
+      // Liens de téléchargement
+      a {
+        color: $primary;
+        font-weight: 500;
+        @include animate(color);
+        
+        &:hover {
+          color: darken($primary, 15%);
+          text-decoration: underline;
+        }
+        
+        &::after {
+          content: " 📥";
+          font-size: $font-xs;
+          opacity: 0.7;
+        }
+      }
+    }
+    
+    // Alternance des lignes
+    tbody tr {
+      @include animate(background);
+      
+      &:nth-child(even) {
+        background: rgba($gray-100, 0.5);
+      }
+      
+      &:hover {
+        background: rgba($primary, 0.05);
+      }
+    }
+  }
+}
+
+// === MESSAGES AUCUN RÉSULTAT ===
+.date-details .no-results {
+  @include flex-center;
+  flex-direction: column;
+  padding: $space-xl;
+  text-align: center;
+  
+  p {
+    color: $gray-600;
+    margin-bottom: $space-md;
+    font-size: $font-lg;
+    
+    &::before {
+      content: "🔍";
+      margin-right: $space-xs;
+      font-size: $font-xl;
+    }
+  }
+  
+  .clear-search {
+    @include button-variant($secondary);
+    font-size: $font-sm;
+  }
+}
+
+.date-details .no-data {
+  @include flex-center;
+  flex-direction: column;
+  padding: $space-xl;
+  text-align: center;
+  color: $gray-500;
+  
+  p {
+    margin: 0;
+    font-size: $font-lg;
+    
+    &::before {
+      content: "📋";
+      margin-right: $space-xs;
+      font-size: $font-xl;
+      opacity: 0.5;
+    }
+  }
+}
+
+// === RESPONSIVE QUERYGRAPH ===
+@include tablet-down {
+  .query-graph {
+    padding: $space-sm;
+  }
+  
+  .chart-container {
+    padding: $space-md;
+    margin-bottom: $space-lg;
+    
+    // Graphique plus petit sur mobile
+    canvas {
+      max-height: 300px !important;
+    }
+  }
+  
+  .details-header {
+    flex-direction: column;
+    gap: $space-sm;
+    text-align: center;
+    
+    .close-details {
+      align-self: center;
+    }
+  }
+  
+  .date-details .search-section {
+    padding: $space-md;
+    
+    input[type="search"] {
+      max-width: none;
+    }
+  }
+  
+  .date-details .table-container {
+    padding: $space-md;
+    
+    table {
+      font-size: $font-xs;
+      
+      th,
+      td {
+        padding: $space-xs $space-sm;
+      }
+      
+      // Scroll horizontal sur mobile
+      th:first-child,
+      td:first-child {
+        position: sticky;
+        left: 0;
+        background: white;
+        z-index: 1;
+      }
+    }
+  }
+}
+
+// === PRINT STYLES ===
+@media print {
+  .query-graph {
+    .back-link,
+    .close-details,
+    .search-section {
+      display: none !important;
+    }
+    
+    .chart-container {
+      box-shadow: none;
+      border: 1px solid $gray-300;
+    }
+    
+    .date-details {
+      box-shadow: none;
+      border: 1px solid $gray-300;
+      margin-top: $space-md;
+      
+      .details-header {
+        background: $gray-100 !important;
+        color: black !important;
+      }
+    }
+  }
+}
+
+// === ANIMATIONS PERSONNALISÉES ===
+@keyframes chart-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.chart-container {
+  animation: chart-appear 0.5s ease-out;
+}
+
+@keyframes details-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.date-details {
+  animation: details-slide-in 0.3s ease-out;
+}

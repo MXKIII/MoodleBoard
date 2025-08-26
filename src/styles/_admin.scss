@@ -1,0 +1,403 @@
+// ============================================
+// ADMIN - Composants spécifiques aux administrateurs
+// ============================================
+
+// === DASHBOARD ADMIN ===
+.admin-dashboard {
+  .dashboard-title {
+    color: $inspe-blue;
+    
+    &::before {
+      content: "👨‍💼 ";
+      margin-right: $space-xs;
+    }
+  }
+  
+  .dashboard-subtitle {
+    .user-context {
+      color: $inspe-blue;
+      font-weight: 500;
+    }
+  }
+}
+
+// === STATISTIQUES PRINCIPALES ADMIN ===
+.admin-main-stats {
+  .stats-grid {
+    @include stats-grid(320px);
+    
+    @include desktop-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .stat-card {
+    &.admin-stat {
+      border-left: 4px solid $inspe-blue;
+      
+      .stat-icon {
+        color: $inspe-blue;
+        background: rgba($inspe-blue, 0.1);
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        @include flex-center;
+      }
+      
+      .stat-value {
+        color: $inspe-blue;
+        font-size: $font-4xl;
+      }
+    }
+    
+    // Cartes spécifiques par métrique
+    &.users-stat {
+      .stat-icon::before {
+        content: "👥";
+      }
+      
+      &:hover {
+        border-left-color: $success;
+        
+        .stat-icon {
+          background: rgba($success, 0.1);
+          color: $success;
+        }
+      }
+    }
+    
+    &.activity-stat {
+      .stat-icon::before {
+        content: "📊";
+      }
+      
+      &:hover {
+        border-left-color: $primary;
+        
+        .stat-icon {
+          background: rgba($primary, 0.1);
+          color: $primary;
+        }
+      }
+    }
+    
+    &.engagement-stat {
+      .stat-icon::before {
+        content: "🎯";
+      }
+      
+      &:hover {
+        border-left-color: $warning;
+        
+        .stat-icon {
+          background: rgba($warning, 0.1);
+          color: $warning;
+        }
+      }
+    }
+  }
+}
+
+// === STATISTIQUES SECONDAIRES ADMIN ===
+.secondary-stats-section {
+  .section-title {
+    color: $inspe-blue;
+    @include flex-center;
+    gap: $space-sm;
+    
+    &::before {
+      content: "📈";
+      font-size: $font-xl;
+    }
+  }
+  
+  .stats-breakdown {
+    display: grid;
+    gap: $space-lg;
+    
+    @include tablet-up {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @include desktop-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+// === STATISTIQUES PAR DÉPARTEMENT ===
+.department-stats-section {
+  margin-top: $space-xl;
+  padding: $space-lg;
+  background: $gray-50;
+  border-radius: $border-radius-lg;
+  border: 1px solid $gray-200;
+  
+  .section-title {
+    color: $inspe-blue;
+    text-align: center;
+    margin-bottom: $space-lg;
+    
+    &::before {
+      content: "🏢 ";
+      margin-right: $space-xs;
+    }
+  }
+  
+  .department-grid {
+    @include stats-grid(300px);
+    
+    .department-card {
+      @include card-base;
+      text-align: center;
+      border-top: 3px solid $inspe-light-blue;
+      @include animate(transform);
+      
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-lg;
+      }
+      
+      .department-name {
+        font-size: $font-lg;
+        font-weight: 600;
+        color: $inspe-blue;
+        margin-bottom: $space-sm;
+      }
+      
+      .department-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $space-sm;
+        
+        .dept-stat {
+          .stat-number {
+            font-size: $font-xl;
+            font-weight: 700;
+            color: $primary;
+          }
+          
+          .stat-label {
+            font-size: $font-sm;
+            color: $gray-600;
+          }
+        }
+      }
+    }
+  }
+}
+
+// === CONTRÔLES ADMIN ===
+.admin-controls {
+  background: white;
+  padding: $space-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-base;
+  margin-bottom: $space-xl;
+  
+  .controls-header {
+    @include flex-between;
+    margin-bottom: $space-md;
+    
+    .controls-title {
+      color: $inspe-blue;
+      font-size: $font-xl;
+      margin: 0;
+    }
+    
+    .controls-actions {
+      @include flex-center;
+      gap: $space-sm;
+    }
+  }
+  
+  .date-filters {
+    @include flex-center;
+    gap: $space-md;
+    flex-wrap: wrap;
+    
+    .filter-group {
+      @include flex-center;
+      gap: $space-xs;
+      
+      label {
+        font-weight: 500;
+        color: $gray-700;
+        font-size: $font-sm;
+      }
+      
+      input[type="date"] {
+        @include form-input;
+        max-width: 200px;
+      }
+    }
+  }
+  
+  .period-selector {
+    margin-top: $space-md;
+    
+    .period-buttons {
+      @include flex-center;
+      gap: $space-xs;
+      flex-wrap: wrap;
+      
+      .period-btn {
+        @include button-base;
+        background: $gray-100;
+        color: $gray-700;
+        padding: $space-xs $space-sm;
+        font-size: $font-sm;
+        border-radius: $border-radius-lg;
+        
+        &.active {
+          background: $inspe-blue;
+          color: white;
+        }
+        
+        &:hover:not(.active) {
+          background: $gray-200;
+        }
+      }
+    }
+  }
+}
+
+// === OVERVIEW GLOBAL ===
+.global-overview {
+  background: linear-gradient(135deg, $inspe-blue, $inspe-light-blue);
+  color: white;
+  padding: $space-xl;
+  border-radius: $border-radius-lg;
+  margin-bottom: $space-xl;
+  
+  .overview-header {
+    text-align: center;
+    margin-bottom: $space-lg;
+    
+    .overview-title {
+      font-size: $font-3xl;
+      margin-bottom: $space-sm;
+      color: white;
+    }
+    
+    .overview-subtitle {
+      opacity: 0.9;
+      font-size: $font-lg;
+    }
+  }
+  
+  .overview-stats {
+    display: grid;
+    gap: $space-lg;
+    
+    @include tablet-up {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include desktop-up {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .overview-stat {
+      text-align: center;
+      
+      .overview-number {
+        font-size: $font-4xl;
+        font-weight: 700;
+        color: white;
+        margin-bottom: $space-xs;
+      }
+      
+      .overview-label {
+        opacity: 0.8;
+        font-size: $font-sm;
+      }
+    }
+  }
+}
+
+// === ALERTES ADMIN ===
+.admin-alerts {
+  margin-bottom: $space-xl;
+  
+  .alert-item {
+    @include flex-between;
+    padding: $space-md;
+    background: white;
+    border-radius: $border-radius-base;
+    border-left: 4px solid transparent;
+    margin-bottom: $space-sm;
+    box-shadow: $shadow-sm;
+    
+    &.alert-warning {
+      border-left-color: $warning;
+      background: rgba($warning, 0.05);
+    }
+    
+    &.alert-error {
+      border-left-color: $error;
+      background: rgba($error, 0.05);
+    }
+    
+    &.alert-info {
+      border-left-color: $info;
+      background: rgba($info, 0.05);
+    }
+    
+    .alert-content {
+      .alert-title {
+        font-weight: 600;
+        margin-bottom: $space-xs;
+      }
+      
+      .alert-message {
+        color: $gray-600;
+        font-size: $font-sm;
+      }
+    }
+    
+    .alert-actions {
+      .alert-dismiss {
+        @include button-base;
+        background: transparent;
+        color: $gray-500;
+        padding: $space-xs;
+        
+        &:hover {
+          background: rgba($gray-500, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// === RESPONSIVE ADMIN ===
+@include tablet-down {
+  .admin-controls {
+    .date-filters {
+      flex-direction: column;
+      align-items: stretch;
+      
+      .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+        
+        input[type="date"] {
+          max-width: none;
+        }
+      }
+    }
+  }
+  
+  .global-overview {
+    .overview-stats {
+      grid-template-columns: 1fr;
+      
+      .overview-stat {
+        padding: $space-md;
+        background: rgba(white, 0.1);
+        border-radius: $border-radius-base;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+// ============================================
+// MAIN SCSS - MOODLEBOARD
+// Point d'entrée principal pour tous les styles
+// ============================================
+
+// 1. Variables (en premier - obligatoire)
+@import 'variables';
+
+// 2. Mixins (utilisent les variables)
+@import 'mixins';
+
+// 3. Base (reset + styles de base)
+@import 'base';
+
+// 4. Layout (structure générale)
+@import 'layout';
+
+// 5. Composants spécifiques par rôle
+@import 'admin';
+@import 'teacher';  
+@import 'student';
+
+// 6. Composants partagés
+@import 'shared';
+
+// 7. Composants spécialisés
+@import 'newsfeed';
+@import 'login';
+@import 'querygraph';   
+@import 'queryresults'; 
+
+// 8. Utilitaires (en dernier)
+@import 'utilities';

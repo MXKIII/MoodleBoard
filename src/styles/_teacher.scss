@@ -1,0 +1,408 @@
+// ============================================
+// TEACHER - Composants spécifiques aux enseignants
+// ============================================
+
+// === DASHBOARD ENSEIGNANT ===
+.teacher-dashboard {
+  .dashboard-title {
+    color: $success;
+    
+    &::before {
+      content: "👨‍🏫 ";
+      margin-right: $space-xs;
+    }
+  }
+  
+  .dashboard-subtitle {
+    .user-context {
+      color: $success;
+      font-weight: 500;
+    }
+  }
+}
+
+// === STATISTIQUES PRINCIPALES ENSEIGNANT ===
+.teacher-main-stats {
+  .stats-grid {
+    @include stats-grid(300px);
+  }
+  
+  .stat-card {
+    &.teacher-stat {
+      border-left: 4px solid $success;
+      
+      .stat-icon {
+        color: $success;
+        background: rgba($success, 0.1);
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        @include flex-center;
+        font-size: $font-xl;
+      }
+      
+      .stat-value {
+        color: $success;
+      }
+    }
+    
+    // Types de statistiques spécifiques
+    &.students-stat {
+      .stat-icon::before {
+        content: "🎓";
+      }
+    }
+    
+    &.courses-stat {
+      .stat-icon::before {
+        content: "📚";
+      }
+    }
+    
+    &.activities-stat {
+      .stat-icon::before {
+        content: "📝";
+      }
+    }
+    
+    &.engagement-stat {
+      .stat-icon::before {
+        content: "📊";
+      }
+    }
+  }
+}
+
+// === CONTRÔLES DE PÉRIODE ===
+.period-controls {
+  background: white;
+  padding: $space-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-base;
+  margin-bottom: $space-xl;
+  
+  .period-header {
+    margin-bottom: $space-md;
+    
+    .period-title {
+      color: $success;
+      font-size: $font-lg;
+      margin-bottom: $space-xs;
+    }
+    
+    .period-description {
+      color: $gray-600;
+      font-size: $font-sm;
+    }
+  }
+  
+  .date-range-selector {
+    @include flex-center;
+    gap: $space-md;
+    flex-wrap: wrap;
+    
+    .date-input-group {
+      @include flex-center;
+      gap: $space-xs;
+      
+      label {
+        font-weight: 500;
+        color: $gray-700;
+        font-size: $font-sm;
+        min-width: 80px;
+      }
+      
+      input[type="date"] {
+        @include form-input;
+        max-width: 180px;
+        border-color: $success;
+        
+        &:focus {
+          border-color: $success;
+          box-shadow: 0 0 0 3px rgba($success, 0.1);
+        }
+      }
+    }
+  }
+  
+  .quick-periods {
+    margin-top: $space-md;
+    
+    .quick-period-label {
+      font-size: $font-sm;
+      color: $gray-600;
+      margin-bottom: $space-xs;
+    }
+    
+    .period-buttons {
+      @include flex-center;
+      gap: $space-xs;
+      flex-wrap: wrap;
+      
+      .quick-period-btn {
+        @include button-base;
+        background: $gray-100;
+        color: $gray-700;
+        padding: $space-xs $space-sm;
+        font-size: $font-sm;
+        border-radius: $border-radius-lg;
+        
+        &.active {
+          background: $success;
+          color: white;
+        }
+        
+        &:hover:not(.active) {
+          background: rgba($success, 0.1);
+          color: $success;
+        }
+      }
+    }
+  }
+}
+
+// === STATISTIQUES SECONDAIRES ENSEIGNANT ===
+.teacher-secondary-stats {
+  .secondary-stats-container {
+    display: grid;
+    gap: $space-lg;
+    
+    @include desktop-up {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  
+  .publications-section {
+    .section-header {
+      @include flex-between;
+      margin-bottom: $space-md;
+      
+      .section-title {
+        color: $success;
+        @include flex-center;
+        gap: $space-xs;
+        
+        &::before {
+          content: "📖";
+        }
+      }
+    }
+    
+    .publications-grid {
+      @include stats-grid(250px);
+      
+      .publication-card {
+        @include card-base;
+        text-align: center;
+        border-top: 3px solid $success;
+        
+        .publication-type {
+          font-size: $font-sm;
+          color: $gray-600;
+          margin-bottom: $space-xs;
+        }
+        
+        .publication-count {
+          font-size: $font-2xl;
+          font-weight: 700;
+          color: $success;
+          margin-bottom: $space-xs;
+        }
+        
+        .publication-label {
+          font-weight: 500;
+          color: $gray-700;
+        }
+      }
+    }
+  }
+  
+  .submissions-section {
+    .submissions-summary {
+      @include card-base;
+      background: linear-gradient(135deg, $warning, rgba($warning, 0.8));
+      color: white;
+      text-align: center;
+      
+      .submissions-icon {
+        font-size: $font-3xl;
+        margin-bottom: $space-sm;
+        
+        &::before {
+          content: "📋";
+        }
+      }
+      
+      .submissions-count {
+        font-size: $font-4xl;
+        font-weight: 700;
+        margin-bottom: $space-xs;
+      }
+      
+      .submissions-label {
+        font-size: $font-lg;
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+// === PROGRESSION DES COURS ===
+.course-progress-section {
+  margin-top: $space-xl;
+  
+  .progress-header {
+    margin-bottom: $space-lg;
+    
+    .progress-title {
+      color: $success;
+      @include flex-center;
+      gap: $space-sm;
+      
+      &::before {
+        content: "📈";
+      }
+    }
+  }
+  
+  .progress-overview {
+    @include stats-grid(280px);
+    
+    .progress-card {
+      @include card-base;
+      
+      .progress-header {
+        @include flex-between;
+        margin-bottom: $space-md;
+        
+        .progress-type {
+          font-weight: 600;
+          color: $gray-700;
+        }
+        
+        .progress-percentage {
+          font-size: $font-lg;
+          font-weight: 700;
+          color: $success;
+        }
+      }
+      
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: $gray-200;
+        border-radius: $border-radius-lg;
+        overflow: hidden;
+        margin-bottom: $space-sm;
+        
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, $success, rgba($success, 0.8));
+          border-radius: inherit;
+          @include animate(width);
+        }
+      }
+      
+      .progress-details {
+        font-size: $font-sm;
+        color: $gray-600;
+        
+        .detail-item {
+          @include flex-between;
+          margin-bottom: $space-xs;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// === RÉSUMÉ GLOBAL ENSEIGNANT ===
+.teacher-global-summary {
+  background: linear-gradient(135deg, $success, rgba($success, 0.8));
+  color: white;
+  padding: $space-xl;
+  border-radius: $border-radius-lg;
+  margin-top: $space-xl;
+  
+  .summary-header {
+    text-align: center;
+    margin-bottom: $space-lg;
+    
+    .summary-title {
+      font-size: $font-2xl;
+      margin-bottom: $space-sm;
+      
+      &::before {
+        content: "🎯 ";
+        margin-right: $space-xs;
+      }
+    }
+  }
+  
+  .summary-stats {
+    display: grid;
+    gap: $space-md;
+    
+    @include tablet-up {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .summary-stat {
+      text-align: center;
+      padding: $space-md;
+      background: rgba(white, 0.1);
+      border-radius: $border-radius-base;
+      
+      dt {
+        font-size: $font-sm;
+        opacity: 0.8;
+        margin-bottom: $space-xs;
+      }
+      
+      dd {
+        font-size: $font-xl;
+        font-weight: 700;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// === RESPONSIVE ENSEIGNANT ===
+@include tablet-down {
+  .period-controls {
+    .date-range-selector {
+      flex-direction: column;
+      align-items: stretch;
+      
+      .date-input-group {
+        flex-direction: column;
+        align-items: stretch;
+        
+        label {
+          min-width: auto;
+        }
+        
+        input[type="date"] {
+          max-width: none;
+        }
+      }
+    }
+  }
+  
+  .teacher-secondary-stats {
+    .secondary-stats-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .teacher-global-summary {
+    .summary-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+}

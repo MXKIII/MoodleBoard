@@ -1,0 +1,423 @@
+// ============================================
+// LOGIN - Composants pour la page de connexion
+// ============================================
+
+@use "sass:color";
+
+// === CONTENEUR PRINCIPAL ===
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $inspe-blue, $inspe-light-blue);
+  @include flex-center;
+  padding: $space-md;
+}
+
+// === CARTE DE CONNEXION ===
+.login-card {
+  background: white;
+  border-radius: $border-radius-xl;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  padding: $space-xl;
+  width: 100%;
+  max-width: 450px;
+  @include animate(transform);
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// === HEADER DE CONNEXION ===
+.login-header {
+  text-align: center;
+  margin-bottom: $space-xl;
+  
+  .login-logo {
+    margin-bottom: $space-lg;
+    
+    img {
+      height: 4rem;
+      width: auto;
+    }
+  }
+  
+  .login-title {
+    color: $inspe-blue;
+    font-size: $font-3xl;
+    margin-bottom: $space-sm;
+    
+    &::before {
+      content: "🔐 ";
+      margin-right: $space-xs;
+    }
+  }
+  
+  .login-subtitle {
+    color: $gray-600;
+    font-size: $font-base;
+    line-height: 1.5;
+  }
+}
+
+// === FORMULAIRE DE CONNEXION ===
+.login-form {
+  .form-group {
+    margin-bottom: $space-lg;
+    
+    &:last-of-type {
+      margin-bottom: $space-xl;
+    }
+  }
+  
+  .form-label {
+    @include form-label;
+    color: $gray-700;
+    font-weight: 600;
+    
+    .required-indicator {
+      color: $error;
+      margin-left: 0.25rem;
+    }
+  }
+  
+  .form-select,
+  .form-input {
+    @include form-input;
+    width: 100%;
+    padding: $space-sm $space-md;
+    border: 2px solid $gray-200;
+    border-radius: $border-radius-base;
+    font-size: $font-base;
+    @include animate(border-color);
+    
+    &:focus {
+      border-color: $inspe-blue;
+      box-shadow: 0 0 0 3px rgba($inspe-blue, 0.1);
+    }
+    
+    &:invalid {
+      border-color: $error;
+    }
+  }
+  
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6,9 12,15 18,9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right $space-sm center;
+    background-size: 1rem;
+    padding-right: $space-xl;
+  }
+  
+  .form-help {
+    font-size: $font-sm;
+    color: $gray-500;
+    margin-top: $space-xs;
+    @include flex-center;
+    gap: $space-xs;
+    
+    &::before {
+      content: "💡";
+      font-size: $font-xs;
+    }
+  }
+}
+
+// === BOUTON DE CONNEXION ===
+.login-button {
+  @include button-base;
+  width: 100%;
+  background: linear-gradient(135deg, $inspe-blue, $inspe-light-blue);
+  color: white;
+  padding: $space-md $space-lg;
+  font-size: $font-lg;
+  font-weight: 600;
+  border-radius: $border-radius-base;
+  @include animate(background);
+  
+ &:hover:not(:disabled) {
+  background: linear-gradient(135deg, 
+    darken($inspe-blue, 10%), 
+    darken($inspe-light-blue, 10%)
+  );
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba($inspe-blue, 0.3);
+}
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    background: $gray-300;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .loading-indicator {
+    @include flex-center;
+    gap: $space-sm;
+    
+    .loading-spinner {
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid rgba(white, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: loading-spin 1s linear infinite;
+    }
+  }
+}
+
+// === MESSAGES D'ERREUR ===
+.login-error {
+  @include error-message;
+  margin-top: $space-md;
+  border-radius: $border-radius-base;
+  @include flex-center;
+  gap: $space-sm;
+  
+  .error-icon {
+    font-size: $font-lg;
+    
+    &::before {
+      content: "⚠️";
+    }
+  }
+  
+  .error-text {
+    flex: 1;
+  }
+}
+
+// === INDICATEUR DE CHARGEMENT ===
+.login-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(white, 0.9);
+  @include flex-center;
+  flex-direction: column;
+  z-index: $z-modal;
+  
+  .loading-content {
+    text-align: center;
+    
+    .loading-spinner {
+      @include loading-spinner;
+      width: 3rem;
+      height: 3rem;
+      border-width: 3px;
+      margin-bottom: $space-md;
+    }
+    
+    .loading-message {
+      color: $inspe-blue;
+      font-size: $font-lg;
+      font-weight: 500;
+    }
+  }
+}
+
+// === PIED DE PAGE ===
+.login-footer {
+  text-align: center;
+  margin-top: $space-xl;
+  padding-top: $space-lg;
+  border-top: 1px solid $gray-200;
+  
+  .footer-links {
+    @include flex-center;
+    gap: $space-md;
+    margin-bottom: $space-md;
+    
+    .footer-link {
+      color: $gray-500;
+      font-size: $font-sm;
+      text-decoration: none;
+      @include animate(color);
+      
+      &:hover {
+        color: $inspe-blue;
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .footer-text {
+    color: $gray-400;
+    font-size: $font-xs;
+  }
+}
+
+// === SÉLECTEUR DE RÔLE ===
+.role-selector {
+  .role-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $space-sm;
+    margin-top: $space-sm;
+    
+    .role-option {
+      @include button-base;
+      background: $gray-50;
+      border: 2px solid $gray-200;
+      border-radius: $border-radius-base;
+      padding: $space-md $space-sm;
+      text-align: center;
+      @include animate(all);
+      
+      &:hover {
+        background: $gray-100;
+        border-color: $inspe-light-blue;
+      }
+      
+      &.selected {
+        background: rgba($inspe-blue, 0.1);
+        border-color: $inspe-blue;
+        color: $inspe-blue;
+        
+        .role-icon {
+          transform: scale(1.1);
+        }
+      }
+      
+      .role-icon {
+        font-size: $font-2xl;
+        margin-bottom: $space-xs;
+        @include animate(transform);
+        
+        &.student-icon::before {
+          content: "🎓";
+        }
+        
+        &.teacher-icon::before {
+          content: "👨‍🏫";
+        }
+        
+        &.admin-icon::before {
+          content: "👨‍💼";
+        }
+      }
+      
+      .role-label {
+        font-size: $font-sm;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// === ANIMATIONS ===
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes login-success {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.login-success {
+  animation: login-success 0.3s ease-out;
+}
+
+// === RESPONSIVE LOGIN ===
+@include tablet-down {
+  .login-page {
+    padding: $space-sm;
+  }
+  
+  .login-card {
+    padding: $space-lg;
+    max-width: none;
+    margin: $space-sm;
+  }
+  
+  .login-header {
+    .login-title {
+      font-size: $font-2xl;
+    }
+  }
+  
+  .role-selector {
+    .role-options {
+      grid-template-columns: 1fr;
+      gap: $space-sm;
+      
+      .role-option {
+        @include flex-center;
+        gap: $space-sm;
+        text-align: left;
+        
+        .role-icon {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  
+  .login-footer {
+    .footer-links {
+      flex-direction: column;
+      gap: $space-sm;
+    }
+  }
+}
+
+// === MODE SOMBRE ===
+@media (prefers-color-scheme: dark) {
+  .login-page {
+    background: linear-gradient(135deg, $gray-900, $gray-800);
+  }
+  
+  .login-card {
+    background: $gray-900;
+    color: white;
+  }
+  
+  .login-title {
+    color: $inspe-light-blue;
+  }
+  
+  .form-input,
+  .form-select {
+    background: $gray-800;
+    border-color: $gray-700;
+    color: white;
+    
+    &:focus {
+      border-color: $inspe-light-blue;
+    }
+  }
+  
+  .role-selector {
+    .role-option {
+      background: $gray-800;
+      border-color: $gray-700;
+      color: white;
+      
+      &:hover {
+        background: $gray-700;
+      }
+      
+      &.selected {
+        background: rgba($inspe-light-blue, 0.2);
+        border-color: $inspe-light-blue;
+        color: $inspe-light-blue;
+      }
+    }
+  }
+}

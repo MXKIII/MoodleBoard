@@ -1,0 +1,450 @@
+// ============================================
+// LAYOUT - Structure générale de l'application
+// Basé sur votre Layout.jsx et les patterns de TDB-app
+// ============================================
+
+// === CONTENEUR PRINCIPAL ===
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// === HEADER PRINCIPAL ===
+.main-header {
+  background: $white;
+  border-bottom: 1px solid $gray-200;
+  position: sticky;
+  top: 0;
+  z-index: $z-header;
+  
+  .header-content {
+    @include container;
+    @include flex-between;
+    padding: $space-sm $space-md;
+  }
+  
+  .logo {
+    @include flex-center;
+    gap: $space-xs;
+    
+    img {
+      height: 2rem;
+    }
+  }
+}
+
+// === NAVIGATION PRINCIPALE ===
+.main-nav {
+  @include nav-list;
+  
+  .nav-list {
+    @include flex-center;
+    gap: $space-md;
+    
+    @include tablet-down {
+      display: none; // Masqué sur mobile
+    }
+  }
+  
+  .nav-link {
+    @include nav-link;
+    font-weight: 500;
+    
+    &.active {
+      color: $primary;
+      background: rgba($primary, 0.1);
+    }
+  }
+}
+
+// === MENU UTILISATEUR ===
+.user-menu {
+  position: relative;
+  
+  .user-button {
+    @include button-base;
+    @include flex-center;
+    gap: $space-xs;
+    padding: $space-xs $space-sm;
+    background: $gray-50;
+    border-radius: $border-radius-lg;
+    
+    .user-avatar {
+      width: 2rem;
+      height: 2rem;
+      background: $primary;
+      color: white;
+      border-radius: 50%;
+      @include flex-center;
+      font-weight: 600;
+      font-size: $font-sm;
+    }
+  }
+  
+  .user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: $space-xs;
+    background: white;
+    border-radius: $border-radius-base;
+    box-shadow: $shadow-lg;
+    min-width: 200px;
+    z-index: $z-dropdown;
+    
+    .dropdown-list {
+      @include nav-list;
+      padding: $space-xs;
+    }
+    
+    .dropdown-item {
+      .dropdown-link {
+        @include nav-link;
+        @include flex-center;
+        gap: $space-xs;
+        width: 100%;
+        padding: $space-xs $space-sm;
+        border-radius: $border-radius-sm;
+        
+        &:hover {
+          background: $gray-100;
+        }
+        
+        &.logout-link {
+          color: $error;
+          
+          &:hover {
+            background: rgba($error, 0.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// === MENU MOBILE ===
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: $z-modal;
+  
+  @include desktop-up {
+    display: none;
+  }
+  
+  .mobile-menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: white;
+    box-shadow: $shadow-xl;
+    transform: translateX(100%);
+    @include animate(transform);
+    
+    &.open {
+      transform: translateX(0);
+    }
+  }
+  
+  .mobile-menu-header {
+    padding: $space-md;
+    border-bottom: 1px solid $gray-200;
+    @include flex-between;
+    
+    .close-button {
+      @include button-base;
+      background: $gray-100;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  
+  .mobile-menu-nav {
+    padding: $space-md;
+    
+    .mobile-nav-list {
+      @include nav-list;
+      
+      .mobile-nav-item {
+        margin-bottom: $space-sm;
+        
+        .mobile-nav-link {
+          @include nav-link;
+          padding: $space-sm;
+          border-radius: $border-radius-base;
+          border: 1px solid transparent;
+          
+          &.active {
+            background: rgba($primary, 0.1);
+            border-color: $primary;
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+// === CONTENU PRINCIPAL ===
+.main-content {
+  flex: 1;
+  padding: $space-lg $space-md;
+  
+  @include tablet-up {
+    padding: $space-xl $space-lg;
+  }
+}
+
+// === DASHBOARDS GÉNÉRIQUES ===
+.dashboard {
+  @include container;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: $space-xl;
+  
+  .dashboard-title {
+    margin-bottom: $space-sm;
+    color: $gray-900;
+  }
+  
+  .dashboard-subtitle {
+    color: $gray-600;
+    max-width: 60ch;
+    margin: 0 auto $space-lg;
+  }
+  
+  .user-context {
+    font-size: $font-sm;
+    color: $gray-500;
+    
+    strong {
+      color: $primary;
+    }
+  }
+}
+
+// === SECTIONS DE STATISTIQUES ===
+.stats-section {
+  margin-bottom: $space-xl;
+  
+  .stats-header {
+    margin-bottom: $space-lg;
+    
+    .section-title {
+      margin-bottom: $space-sm;
+      padding-bottom: $space-xs;
+      border-bottom: 2px solid $primary;
+    }
+    
+    .section-description {
+      color: $gray-600;
+    }
+  }
+}
+
+// === GRILLES DE STATISTIQUES ===
+.stats-grid {
+  @include stats-grid(280px);
+  margin-bottom: $space-lg;
+}
+
+.stats-list {
+  @include nav-list;
+  display: grid;
+  gap: $space-md;
+  
+  @include tablet-up {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include desktop-up {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// === CARTES DE STATISTIQUES ===
+.stat-card {
+  @include stat-card;
+  
+  .stat-header {
+    @include flex-between;
+    margin-bottom: $space-sm;
+    
+    .stat-icon {
+      font-size: $font-xl;
+    }
+  }
+  
+  .stat-content {
+    .stat-value {
+      font-size: $font-3xl;
+      font-weight: 700;
+      color: $primary;
+      margin-bottom: $space-xs;
+    }
+    
+    .stat-label {
+      color: $gray-600;
+      font-size: $font-sm;
+      margin-bottom: $space-sm;
+    }
+    
+    .stat-description {
+      font-size: $font-xs;
+      color: $gray-500;
+    }
+  }
+  
+  .stat-footer {
+    margin-top: $space-sm;
+    padding-top: $space-sm;
+    border-top: 1px solid $gray-200;
+    
+    .stat-trend {
+      @include flex-center;
+      gap: $space-xs;
+      font-size: $font-sm;
+      
+      &.positive {
+        color: $success;
+      }
+      
+      &.negative {
+        color: $error;
+      }
+      
+      &.neutral {
+        color: $gray-500;
+      }
+    }
+  }
+}
+
+// === BOUTONS D'ACTION ===
+.action-buttons {
+  @include flex-center;
+  gap: $space-sm;
+  flex-wrap: wrap;
+  margin-top: $space-lg;
+}
+
+// === ÉTATS DE CHARGEMENT ===
+.loading-state {
+  @include flex-center;
+  flex-direction: column;
+  padding: $space-xl;
+  text-align: center;
+  
+  .loading-spinner {
+    @include loading-spinner;
+    margin-bottom: $space-md;
+  }
+}
+
+.global-loading-overlay {
+  @include loading-overlay;
+  
+  .loading-content {
+    @include flex-center;
+    flex-direction: column;
+    gap: $space-md;
+    background: white;
+    padding: $space-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+  }
+}
+
+// === MESSAGES D'ERREUR ===
+.error-banner {
+  @include error-message;
+  @include flex-between;
+  margin-bottom: $space-lg;
+  
+  .error-content {
+    @include flex-center;
+    gap: $space-sm;
+  }
+  
+  .error-dismiss {
+    @include button-base;
+    background: transparent;
+    color: inherit;
+    padding: $space-xs;
+    margin-left: $space-sm;
+    
+    &:hover {
+      background: rgba(white, 0.2);
+    }
+  }
+}
+
+// === RACCOURCIS CLAVIER ===
+.keyboard-shortcuts {
+  margin: $space-lg 0;
+  background: $gray-50;
+  border-radius: $border-radius-base;
+  border: 1px solid $gray-200;
+  
+  summary {
+    padding: $space-sm;
+    font-weight: 500;
+    cursor: pointer;
+    
+    &:hover {
+      background: $gray-100;
+    }
+  }
+  
+  dl {
+    padding: $space-sm;
+    margin: 0;
+    border-top: 1px solid $gray-200;
+    
+    dt {
+      font-weight: 500;
+      margin-bottom: $space-xs;
+    }
+    
+    dd {
+      margin: 0 0 $space-sm 0;
+      color: $gray-600;
+    }
+  }
+}
+
+// === FOOTER ===
+.dashboard-footer {
+  margin-top: $space-xl;
+  padding-top: $space-lg;
+  border-top: 1px solid $gray-200;
+  text-align: center;
+  color: $gray-500;
+  font-size: $font-sm;
+  
+  .footer-content {
+    @include container;
+  }
+  
+  .footer-stats {
+    @include stats-grid(200px, $space-sm);
+    margin-bottom: $space-md;
+  }
+}
+
+// === Z-INDEX ===
+$z-header: 1000;
+$z-dropdown: 1010;
+$z-modal: 1020;

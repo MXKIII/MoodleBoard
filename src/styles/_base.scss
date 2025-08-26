@@ -1,0 +1,300 @@
+// ============================================
+// BASE SCSS - MOODLEBOARD
+// Reset CSS moderne + styles de base
+// ============================================
+
+@use "sass:color";
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: $line-height;
+  scroll-behavior: smooth;
+  
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: $font-primary;
+  font-size: $font-base;
+  line-height: $line-height;
+  color: $inspe-light-blue;
+  background: $white;
+  
+  // Amélioration typographique
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// === TYPOGRAPHIE ===
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 $space-md 0;
+  font-weight: 600;
+  line-height: 1.25;
+  color: $gray-900;
+}
+
+h1 {
+  font-size: $font-3xl;
+  
+  @include tablet-up {
+    font-size: $font-4xl;
+  }
+}
+
+h2 {
+  font-size: $font-2xl;
+  
+  @include tablet-up {
+    font-size: $font-3xl;
+  }
+}
+
+h3 {
+  font-size: $font-xl;
+  
+  @include tablet-up {
+    font-size: $font-2xl;
+  }
+}
+
+h4 {
+  font-size: $font-lg;
+}
+
+h5, h6 {
+  font-size: $font-base;
+  font-weight: 500;
+}
+
+p {
+  margin: 0 0 $space-sm 0;
+  max-width: 65ch; // Lisibilité optimale
+}
+
+// === LIENS ===
+a {
+  color: $primary;
+  text-decoration: none;
+  @include animate(color);
+  
+  &:hover {
+  color: darken($primary, 10%);
+  text-decoration: underline;
+}
+  
+  &:focus-visible {
+    @include focus-ring();
+  }
+}
+
+// === LISTES ===
+ul, ol {
+  margin: 0 0 $space-md 0;
+  padding-left: $space-lg;
+}
+
+li {
+  margin-bottom: $space-xs;
+}
+
+// === IMAGES ===
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// === TABLEAUX ===
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: $space-sm;
+  border-bottom: 1px solid $gray-200;
+}
+
+th {
+  background: $gray-50;
+  font-weight: 600;
+}
+
+// === FORMULAIRES BASE ===
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  cursor: pointer;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// === CODE ===
+code, pre {
+  font-family: $font-secondary;
+  font-size: 0.875em;
+}
+
+code {
+  background: $gray-100;
+  color: $gray-800;
+  padding: 0.125em 0.25em;
+  border-radius: $border-radius-sm;
+}
+
+pre {
+  background: $gray-50;
+  color: $gray-800;
+  padding: $space-md;
+  border-radius: $border-radius-base;
+  overflow-x: auto;
+  line-height: 1.5;
+  
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+// === ACCESSIBILITÉ ===
+.sr-only {
+  @include sr-only;
+}
+
+:focus-visible {
+  @include focus-ring();
+}
+
+// Skip link pour navigation clavier
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: $space-sm;
+  background: $primary;
+  color: white;
+  padding: $space-xs $space-sm;
+  text-decoration: none;
+  border-radius: $border-radius-base;
+  z-index: $z-tooltip;
+  @include animate(top);
+  
+  &:focus {
+    top: $space-xs;
+  }
+}
+
+// === SÉLECTION DE TEXTE ===
+::selection {
+  background-color: rgba($primary, 0.2);
+  color: $gray-900;
+}
+
+// === PRÉFÉRENCES UTILISATEUR ===
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: $gray-900;
+    color: $gray-100;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+}
+
+@media (prefers-contrast: high) {
+  body {
+    color: black;
+    background: white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: black;
+  }
+  
+  a {
+    color: #0066cc;
+    text-decoration: underline;
+  }
+}
+
+// === CLASSES UTILITAIRES DE BASE ===
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.visually-hidden { @include sr-only; }
+
+// === ÉTATS ===
+.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.error {
+  color: $error;
+}
+
+.success {
+  color: $success;
+}
+
+.warning {
+  color: $warning;
+}
+
+.info {
+  color: $info;
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// === PRINT STYLES ===
+@media print {
+  body {
+    color: black;
+    background: white;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+}
