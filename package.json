@@ -1,0 +1,32 @@
+{
+  "name": "Back",
+  "version": "1.0.0",
+  "description": "Backend pour MoodleBoard",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "echo 'No build needed for Node.js'", 
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.1",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "ssh2": "^1.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@eslint/json": "^0.12.0",
+    "@eslint/markdown": "^6.6.0",
+    "eslint": "^9.30.1",
+    "globals": "^16.3.0"
+  }
+}
