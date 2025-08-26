@@ -10,6 +10,17 @@
   flex-direction: column;
 }
 
+// === RESET MARQUEURS LISTES ===
+.main-menu,
+.user-dropdown,
+ul[role="menubar"],
+ul[role="menu"] {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
 // === HEADER PRINCIPAL ===
 .main-header {
   background: $white;
@@ -448,3 +459,24 @@
 $z-header: 1000;
 $z-dropdown: 1010;
 $z-modal: 1020;
+
+// === ALIGNEMENT DES LI DANS LA NAVIGATION ===
+.main-menu > li,
+.user-dropdown > li {
+  display: inline-block;        
+  vertical-align: middle;
+  margin: 0 $space-xs;
+  text-align: left;
+}
+
+// Centrage sur desktop uniquement
+@include desktop-up {
+  .main-menu {
+    text-align: center;          
+  }
+  .main-menu > li {
+    float: none;                 
+    display: inline-block;       
+    text-align: center;          
+  }
+}

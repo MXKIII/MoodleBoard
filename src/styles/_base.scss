@@ -38,11 +38,12 @@ body {
 }
 
 // === TYPOGRAPHIE ===
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
   margin: 0 0 $space-md 0;
   font-weight: 600;
   line-height: 1.25;
-  color: $gray-900;
+  color: $inspe-blue;
+  text-align: center;
 }
 
 h1 {
@@ -79,8 +80,9 @@ h5, h6 {
 }
 
 p {
-  margin: 0 0 $space-sm 0;
-  max-width: 65ch; // Lisibilité optimale
+  margin: 0 auto $space-md auto;
+  max-width: 65ch; 
+  font-weight: 400; 
 }
 
 // === LIENS ===
@@ -227,8 +229,9 @@ pre {
     color: $gray-100;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    color: white;
+  h1, h2, h3, h4, h5, h6, p {
+    color: $inspe-blue;
+    text-align: center;
   }
 }
 
@@ -238,9 +241,11 @@ pre {
     background: white;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    color: black;
+  h1, h2, h3, h4, h5, h6, p {
+    color: $inspe-light-blue;
+    text-align: center;
   }
+
   
   a {
     color: #0066cc;

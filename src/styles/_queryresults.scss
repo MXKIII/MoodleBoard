@@ -61,8 +61,13 @@
   }
   
   .results-count {
+
     color: $gray-700;
     font-size: $font-base;
+    margin: 0 auto $space-md auto;  
+    text-align: center;            
+    display: block;                 
+    width: fit-content;  
     
     strong {
       color: $primary;
@@ -80,6 +85,7 @@
   margin-bottom: $space-lg;
   border: 1px solid $gray-200;
   
+  
   label {
     @include form-label;
     color: $gray-800;
@@ -87,6 +93,7 @@
     margin-bottom: $space-sm;
     @include flex-center;
     gap: $space-xs;
+    justify-content: center;
     
     &::before {
       content: "🔍";
@@ -94,7 +101,7 @@
     }
   }
   
-  input[type="search"] {
+  #search-input {
     @include form-input;
     width: 100%;
     max-width: 500px;
@@ -102,6 +109,9 @@
     border: 2px solid $gray-300;
     font-size: $font-base;
     @include animate(border-color);
+    text-align: center;
+    margin: 0 auto; 
+    display: block; 
     
     &:focus {
       border-color: $primary;
@@ -109,7 +119,7 @@
     }
     
     &::placeholder {
-      color: $gray-400;
+      color: $inspe-blue;
       font-style: italic;
     }
   }
@@ -124,7 +134,7 @@
 
 // === PAGINATION ===
 .pagination {
-  background: white;
+  background: $gray-400;
   padding: $space-md $space-lg;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-sm;
@@ -196,7 +206,7 @@
 
 // === CONTENEUR TABLEAU ===
 .table-container {
-  background: white;
+  background: $inspe-blue;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-base;
   overflow: hidden;
@@ -312,7 +322,7 @@
   @include animate(background);
   
   &:nth-child(even) {
-    background: rgba($gray-50, 0.8);
+    background: rgba($gray-50, 0.6);
   }
   
   &:hover {
